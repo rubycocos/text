@@ -2,9 +2,9 @@
 
 ## Filters
 
-### `comments_percent_style`
+### `comments_percent_style` Filter
 
-Strip comments lines starting with percent (that is, %). Example:
+Strip comment lines starting with percent (that is, %). Example:
 
     %%%%%%%%%%%%%%%%
     % Some Headers
@@ -42,13 +42,13 @@ or
     in plain old CSS. Thanks to gradient support in backgrounds in CSS3.
     %end
 
-Note: As a shortcut using a single `%end` directive (that is, without a matching `%begin`)
+Note: As a shortcut using a single `%end` directive (that is, without a leading `%begin`)
 will skip everything until the end of the document.
 
 
-### `skip_end_directive`
+### `skip_end_directive` Filter
 
-Skip/comment out blocks in your document by
+Skip (comment out) text blocks in your document by
 enclosing with `__SKIP__`/`__END__`. Example:
 
     __SKIP__
@@ -57,7 +57,7 @@ enclosing with `__SKIP__`/`__END__`. Example:
     in plain old CSS. Thanks to gradient support in backgrounds in CSS3.
     __END__
 
-As a shortcut if you just use `__END__` (without `__SKIP__`) the filter
+Note: As a shortcut using just `__END__` (without `__SKIP__`)
 will skip everything from `__END__` until the end of the document.
 
 
