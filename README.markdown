@@ -77,7 +77,7 @@ Just install the gem:
 
 ## Real World Usage
 
-The [`slideshow`](http://slideshow.rubyforge.org) (also known as Slide Show (S9)) gem
+The [`slideshow`](http://slideshow.rubyforge.org) gem (also known as Slide Show (S9))
 that lets you create slide shows
 and author slides in plain text using a wiki-style markup language that's easy-to-write and easy-to-read.
 
