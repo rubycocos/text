@@ -8,8 +8,13 @@ require 'optparse'
 require 'fileutils'
 
 
+# our own code
+
+require 'textutils/filter/comment_filter'
+
+
 module TextUtils
 
-  VERSION = '0.0.1'
+  VERSION = '0.1.0'
 
-end   # class TextUtils
+end   # module TextUtils
