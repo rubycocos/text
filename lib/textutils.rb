@@ -16,9 +16,16 @@ require 'textutils/filter/comment_filter'
 require 'textutils/filter/erb_django_filter'
 require 'textutils/filter/erb_filter'
 
+require 'textutils/utils'
+require 'textutils/reader/code_reader'
+require 'textutils/reader/hash_reader'
+require 'textutils/reader/line_reader'
+require 'textutils/reader/values_reader'
+
+
 
 module TextUtils
 
-  VERSION = '0.2.0'
+  VERSION = '0.3.0'
 
 end   # module TextUtils
