@@ -8,8 +8,13 @@ require 'optparse'
 require 'fileutils'
 require 'erb'
 
+# 3rd party gems / libs
+
+require 'logutils'
 
 # our own code
+
+require 'textutils/version'
 
 require 'textutils/filter/code_filter'
 require 'textutils/filter/comment_filter'
@@ -23,9 +28,3 @@ require 'textutils/reader/line_reader'
 require 'textutils/reader/values_reader'
 
 
-
-module TextUtils
-
-  VERSION = '0.3.0'
-
-end   # module TextUtils

@@ -7,3 +7,9 @@ lib/textutils/filter/code_filter.rb
 lib/textutils/filter/comment_filter.rb
 lib/textutils/filter/erb_django_filter.rb
 lib/textutils/filter/erb_filter.rb
+lib/textutils/reader/code_reader.rb
+lib/textutils/reader/hash_reader.rb
+lib/textutils/reader/line_reader.rb
+lib/textutils/reader/values_reader.rb
+lib/textutils/utils.rb
+lib/textutils/version.rb

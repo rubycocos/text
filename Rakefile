@@ -1,5 +1,5 @@
 require 'hoe'
-require './lib/textutils.rb'
+require './lib/textutils/version.rb'
 
 Hoe.spec 'textutils' do
   
@@ -16,5 +16,16 @@ Hoe.spec 'textutils' do
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.markdown'
   self.history_file = 'History.markdown'
+
+  self.extra_deps = [
+    ['logutils', '~> 0.2.0']
+  ]
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+   :required_ruby_version => '>= 1.9.2'
+  }
   
+
 end
