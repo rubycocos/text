@@ -6,18 +6,13 @@
 
 class StringLineReader
 
-  def initialize( logger=nil, data )
-    if logger.nil?
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::INFO
-    else
-      @logger = logger
-    end
-    
-    @data = data
+  def logger
+    @logger ||= LogUtils[ self ]
   end
 
-  attr_reader :logger
+  def initialize( data )
+    @data = data
+  end
 
 
   def each_line
@@ -47,23 +42,17 @@ end
 
 class LineReader
 
-  def initialize( logger=nil, path )
-    if logger.nil?
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::INFO
-    else
-      @logger = logger
-    end
-    
+  def logger
+    @logger ||= LogUtils[ self ]
+  end
+
+  def initialize( path )
     @path = path
 
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
     ## - see worlddb/utils.rb
     @data = File.read_utf8( @path )
   end
-
-  attr_reader :logger
-
 
   def each_line
     @data.each_line do |line|

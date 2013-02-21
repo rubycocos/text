@@ -2,22 +2,19 @@
 
 class CodeReader
 
-  def initialize( logger=nil, path )
-    if logger.nil?
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::INFO
-    else
-      @logger = logger
-    end
+  def logger
+    @logger ||= LogUtils[ self ]
+  end
 
-    @path  = path
+  def initialize( path )
+    @path   = path
 
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
     ## - see worlddb/utils.rb
     
     @code  = File.read_utf8( @path )
   end
-  
+
   def eval( klass )
     klass.class_eval( @code )
 
@@ -28,7 +25,5 @@ class CodeReader
     #  <code here>
     # end
   end
-
-  attr_reader :logger
 
 end # class CodeReader

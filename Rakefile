@@ -18,7 +18,7 @@ Hoe.spec 'textutils' do
   self.history_file = 'History.markdown'
 
   self.extra_deps = [
-    ['logutils', '~> 0.2.0']
+    ['logutils', '>= 0.3.0']
   ]
 
   self.licenses = ['Public Domain']

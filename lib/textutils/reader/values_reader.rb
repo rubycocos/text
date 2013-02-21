@@ -2,15 +2,11 @@
 
 class ValuesReader
 
-  def initialize( logger, path, more_values={} )
-    ## todo: check - can we make logger=nil a default arg too?
-    if logger.nil?
-      @logger = Logger.new(STDOUT)
-      @logger.level = Logger::INFO
-    else
-      @logger = logger
-    end
-    
+  def logger
+    @logger ||= LogUtils[ self ]
+  end
+
+  def initialize( path, more_values={} )
     @path = path
 
     @more_values = more_values
@@ -18,8 +14,6 @@ class ValuesReader
     @data = File.read_utf8( @path )
   end
 
-  attr_reader :logger
-  
   def each_line
    
     @data.each_line do |line|
@@ -47,7 +41,7 @@ class ValuesReader
       
       line = line.strip
 
-      puts "line: >>#{line}<<"
+      logger.debug "line: >>#{line}<<"
 
       values = line.split(',')
       
@@ -60,14 +54,14 @@ class ValuesReader
       
       values = values.select do |value|
         if value =~ /^#/  ## start with # treat it as a comment column; e.g. remove it
-          puts "   removing column with value >>#{value}<<"
+          logger.debug "   removing column with value >>#{value}<<"
           false
         else
           true
         end
       end
       
-      puts "  values: >>#{values.join('<< >>')}<<"
+      logger.debug "  values: >>#{values.join('<< >>')}<<"
       
       
       ### todo/fix: allow check - do NOT allow mixed use of with key and w/o key
@@ -103,7 +97,7 @@ class ValuesReader
       if key_col == '<auto>'
         ## autogenerate key from first title
         key_col = title_to_key( titles[0] )
-        puts "   autogen key >#{key_col}< from title >#{titles[0]}<"
+        logger.debug "   autogen key >#{key_col}< from title >#{titles[0]}<"
       end
       
       attribs[ :key ] = key_col
@@ -171,5 +165,4 @@ class ValuesReader
       key
   end # method title_to_key
 
-  
 end # class ValuesReader
