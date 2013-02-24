@@ -3,15 +3,13 @@
 
 class HashReader
 
-  def logger
-    @logger ||= LogUtils[ self ]
-  end
+  include LogUtils::Logging
 
   def initialize( path )
     @path = path
 
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
-    ## - see worlddb/utils.rb
+    ## - see textutils/utils.rb
     
     text = File.read_utf8( @path )
    
@@ -31,7 +29,7 @@ class HashReader
     ## nb: yaml does NOT support tabs see why here -> yaml.org/faq.html
     
     text = text.gsub( "\t" ) do |_|
-      logger.warn "hash reader - found tab (\t) replacing w/ two spaces; yaml forbids tabs; see yaml.org/faq.html"
+      logger.warn "hash reader - found tab (\t) replacing w/ two spaces; yaml forbids tabs; see yaml.org/faq.html (path=#{path})"
       '  '  # replace w/ two spaces
     end
 
@@ -41,7 +39,7 @@ class HashReader
     ##   no: no
 
     text = text.gsub( /^([ ]*)(ON|On|on|NO|No|no|N|n|Y|y)[ ]*:/ ) do |value|
-      logger.warn "hash reader - found implicit bool (#{$1}#{$2}) for key; adding quotes to turn into string; see yaml.org/refcard.html"
+      logger.warn "hash reader - found implicit bool (#{$1}#{$2}) for key; adding quotes to turn into string; see yaml.org/refcard.html (path=#{path})"
       # nb: preserve leading spaces for structure - might be significant
       "#{$1}'#{$2}':"  # add quotes to turn it into a string (not bool e.g. true|false)
     end
@@ -51,7 +49,7 @@ class HashReader
     ##  key: nb,nn,no,se   => nb,nn,'no',se  -- avoid!!
 
     text = text.gsub( /:[ ]+(ON|On|on|NO|No|no|N|n|Y|y)[ ]*($| #.*$)/ ) do |value|
-      logger.warn "hash reader - found implicit bool (#{$1}) for value; adding quotes to turn into string; see yaml.org/refcard.html"
+      logger.warn "hash reader - found implicit bool (#{$1}) for value; adding quotes to turn into string; see yaml.org/refcard.html (path=#{path})"
       ": '#{$1}'"  # add quotes to turn it into a string (not bool e.g. true|false)
     end
 
@@ -98,6 +96,6 @@ class HashReader
     
       yield( key, value )
     end
-  end # method each  
+  end # method each
 
 end # class HashReader

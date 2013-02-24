@@ -6,9 +6,7 @@
 
 class StringLineReader
 
-  def logger
-    @logger ||= LogUtils[ self ]
-  end
+  include LogUtils::Logging
 
   def initialize( data )
     @data = data
@@ -42,15 +40,13 @@ end
 
 class LineReader
 
-  def logger
-    @logger ||= LogUtils[ self ]
-  end
+  include LogUtils::Logging
 
   def initialize( path )
     @path = path
 
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
-    ## - see worlddb/utils.rb
+    ## - see textutils/utils.rb
     @data = File.read_utf8( @path )
   end
 

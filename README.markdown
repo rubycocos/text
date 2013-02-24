@@ -1,4 +1,11 @@
-# `textutils` - Text Filters 'n' Helpers in Ruby
+# `textutils` - Text Filters, Helpers, Readers and More in Ruby
+
+* home  :: [github.com/geraldb/textutils](https://github.com/geraldb/textutils)
+* bugs  :: [github.com/geraldb/textutils/issues](https://github.com/geraldb/textutils/issues)
+* gem   :: [rubygems.org/gems/textutils](https://rubygems.org/gems/textutils)
+* rdoc  :: [rubydoc.info/gems/textutils](http://rubydoc.info/gems/textutils)
+* forum :: [groups.google.com/group/webslideshow](https://groups.google.com/group/webslideshow)
+
 
 ## Filters
 
@@ -81,8 +88,12 @@ The [`slideshow`](http://slideshow.rubyforge.org) gem (also known as Slide Show 
 that lets you create slide shows
 and author slides in plain text using a wiki-style markup language that's easy-to-write and easy-to-read.
 
-The [`markdown`](http://geraldb.github.com/markdown) gem that lets you use your markdown library
-of choice. 
+The [`markdown`](https://github.com/geraldb/markdown) gem that lets you use your markdown library
+of choice.
+
+The [`worlddb`](https://github.com/geraldb/world.db.ruby) gem that offers a command line tool for the open world database (`world.db`).
+
+The [`sportdb`](https://github.com/geraldb/sport.db.ruby) gem that offers a command line tool for the open sport/football database (`sport.db`/`football.db`).
 
 ## Alternatives
 

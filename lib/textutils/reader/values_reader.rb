@@ -2,9 +2,7 @@
 
 class ValuesReader
 
-  def logger
-    @logger ||= LogUtils[ self ]
-  end
+  include LogUtils::Logging
 
   def initialize( path, more_values={} )
     @path = path

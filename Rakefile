@@ -5,11 +5,11 @@ Hoe.spec 'textutils' do
   
   self.version = TextUtils::VERSION
   
-  self.summary = 'textutils - Text Filters and Helpers'
+  self.summary = 'textutils - Text Filters, Helpers, Readers and More'
   self.description = summary
 
   self.urls    = ['http://geraldb.github.com/textutils']
-  
+
   self.author  = 'Gerald Bauer'
   self.email   = 'webslideshow@googlegroups.com'
 
@@ -18,7 +18,7 @@ Hoe.spec 'textutils' do
   self.history_file = 'History.markdown'
 
   self.extra_deps = [
-    ['logutils', '>= 0.3.0']
+    ['logutils', '>= 0.5.0']
   ]
 
   self.licenses = ['Public Domain']
