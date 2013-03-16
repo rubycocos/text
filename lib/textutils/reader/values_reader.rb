@@ -130,31 +130,59 @@ class ValuesReader
       ## todo: add some more
       ## see http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references  for more
       
+      ## todo: add unicode codepoint name
+      
       alternatives = [
         ['ß', 'ss'],
         ['æ', 'ae'],
-        ['ä', 'ae'],  
+        ['ä', 'ae'],
+        ['ā', 'a' ],  # e.g. Liepājas
         ['á', 'a' ],  # e.g. Bogotá, Králové
         ['ã', 'a' ],  # e.g  São Paulo
         ['ă', 'a' ],  # e.g. Chișinău
+        ['â', 'a' ],  # e.g  Goiânia
+        ['å', 'a' ],  # e.g. Vålerenga
+        ['ą', 'a' ],  # e.g. Śląsk
+        ['ç', 'c' ],  # e.g. São Gonçalo, Iguaçu, Neftçi
+        ['ć', 'c' ],  # e.g. Budućnost
         ['é', 'e' ],  # e.g. Vélez, Králové
         ['è', 'e' ],  # e.g. Rivières
         ['ê', 'e' ],  # e.g. Grêmio
         ['ě', 'e' ],  # e.g. Budějovice
+        ['ė', 'e' ],  # e.g. Vėtra
+        ['ë', 'e' ],  # e.g. Skënderbeu
+        ['ğ', 'g' ],  # e.g. Qarabağ
         ['ì', 'i' ],  # e.g. Potosì
         ['í', 'i' ],  # e.g. Ústí
+        ['ł', 'l' ],  # e.g. Wisła, Wrocław
         ['ñ', 'n' ],  # e.g. Porteño
         ['ň', 'n' ],  # e.g. Plzeň, Třeboň
-        ['ö', 'oe'],  
+        ['ö', 'oe'],
+        ['ő', 'o' ],  # e.g. Győri
         ['ó', 'o' ],  # e.g. Colón, Łódź, Kraków
+        ['õ', 'o' ],  # e.g. Nõmme
+        ['ø', 'o' ],  # e.g. Fuglafjørdur, København
         ['ř', 'r' ],  # e.g. Třeboň
-        ['ș', 's' ],  # e.g. Chișinău
-        ['ü', 'ue'],  
+        ['ș', 's' ],  # e.g. Chișinău, București
+        ['ş', 's' ],  # e.g. Beşiktaş
+        ['š', 's' ],  # e.g. Košice
+        ['ü', 'ue'],
         ['ú', 'u' ],  # e.g. Fútbol
+        ['ū', 'u' ],  # e.g. Sūduva
+        ['ı', 'u' ],  # e.g. Bakı   # use u?? (Baku) why-why not?
         ['ź', 'z' ],  # e.g. Łódź
+        ['ž', 'z' ],  # e.g. Domžale, Petržalka
+
         ['Č', 'c' ],  # e.g. České
+        ['İ', 'i' ],  # e.g. İnter
+        ['Í', 'i' ],  # e.g. ÍBV
         ['Ł', 'l' ],  # e.g. Łódź
-        ['Ú', 'u' ],  # e.g. Ústí
+        ['Ö', 'oe' ], # e.g. Örebro
+        ['Ś', 's' ],  # e.g. Śląsk
+        ['Š', 's' ],  # e.g. MŠK
+        ['Ş', 's' ],  # e.g. Şüvälan
+        ['Ú', 'u' ],  # e.g. Ústí, Újpest
+        ['Ž', 'z' ]   # e.g. Žilina
       ]
       
       alternatives.each do |alt|
