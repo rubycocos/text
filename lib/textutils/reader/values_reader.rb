@@ -16,13 +16,21 @@ class ValuesReader
    
     @data.each_line do |line|
   
-      if line =~ /^\s*#/
+      ## allow alternative comment lines
+      ## e.g. -- comment or
+      ##      % comment
+      ##  why?  # might get used by markdown for marking headers, for example
+
+      ## NB: for now alternative comment lines not allowed as end of line style e.g
+      ##  some data, more data   -- comment here
+
+      if line =~ /^\s*#/ || line =~ /^\s*--/ || line =~ /^\s*%/
         # skip komments and do NOT copy to result (keep comments secret!)
         logger.debug 'skipping comment line'
         next
       end
-        
-      if line =~ /^\s*$/ 
+
+      if line =~ /^\s*$/
         # kommentar oder leerzeile überspringen 
         logger.debug 'skipping blank line'
         next
@@ -39,9 +47,19 @@ class ValuesReader
       
       line = line.strip
 
+      ### guard escaped commas (e.g. \,)
+      line = line.gsub( '\,', '@commma@' )
+      
+      ## use generic separator (allow us to configure separator)
+      line = line.gsub( ',', '@sep@')
+      
+      ## restore escaped commas (before split)
+      line = line.gsub( '@commma@', ',' )
+
+
       logger.debug "line: >>#{line}<<"
 
-      values = line.split(',')
+      values = line.split( '@sep@' )
       
       # pass 1) remove leading and trailing whitespace for values
 
@@ -71,8 +89,8 @@ class ValuesReader
       # if it looks like a key (only a-z lower case allowed); assume it's a key
       #   - also allow . in keys e.g. world.quali.america, at.cup, etc.
       #   - also allow 0-9 in keys e.g. at.2, at.3.1, etc.
-      
-      if values[0] =~ /^[a-z][a-z0-9.]*[a-z0-9]$/    # NB: minimum two a-z letters required
+
+      if values[0] =~ /^[a-z][a-z0-9.]*[a-z0-9]|[a-z]$/    # NB: key must start w/ a-z letter (NB: minimum one letter possible)
         key_col         = values[0]
         title_col       = values[1]
         more_cols       = values[2..-1]
@@ -121,9 +139,16 @@ class ValuesReader
 
       ## remove optional longer title part in () e.g. Las Palmas (de Gran Canaria), Palma (de Mallorca)
       key = key.gsub( /\(.+\)/, '' )
+      
+      ## remove optional longer title part in {} e.g. Ottakringer {Bio} or {Alkoholfrei}
+      ## todo: use for autotags? e.g. {Bio} => bio 
+      key = key.gsub( /\{.+\}/, '' )
 
       ## remove all whitespace and punctuation
       key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
+      
+      ## remove special chars (e.g. %˚)
+      key = key.gsub( /[%˚]/, '' )
 
       ##  turn accented char into ascii look alike if possible
       ##
@@ -145,10 +170,12 @@ class ValuesReader
         ['ą', 'a' ],  # e.g. Śląsk
         ['ç', 'c' ],  # e.g. São Gonçalo, Iguaçu, Neftçi
         ['ć', 'c' ],  # e.g. Budućnost
+        ['č', 'c' ],  # e.g. Tradiční, Výčepní
         ['é', 'e' ],  # e.g. Vélez, Králové
         ['è', 'e' ],  # e.g. Rivières
         ['ê', 'e' ],  # e.g. Grêmio
         ['ě', 'e' ],  # e.g. Budějovice
+        ['ĕ', 'e' ],  # e.g. Svĕtlý
         ['ė', 'e' ],  # e.g. Vėtra
         ['ë', 'e' ],  # e.g. Skënderbeu
         ['ğ', 'g' ],  # e.g. Qarabağ
@@ -166,10 +193,13 @@ class ValuesReader
         ['ș', 's' ],  # e.g. Chișinău, București
         ['ş', 's' ],  # e.g. Beşiktaş
         ['š', 's' ],  # e.g. Košice
+        ['ť', 't' ],  # e.g. Měšťan
         ['ü', 'ue'],
         ['ú', 'u' ],  # e.g. Fútbol
         ['ū', 'u' ],  # e.g. Sūduva
+        ['ů', 'u' ],  # e.g. Sládkův
         ['ı', 'u' ],  # e.g. Bakı   # use u?? (Baku) why-why not?
+        ['ý', 'y' ],  # e.g. Nefitrovaný
         ['ź', 'z' ],  # e.g. Łódź
         ['ž', 'z' ],  # e.g. Domžale, Petržalka
 
@@ -178,6 +208,7 @@ class ValuesReader
         ['Í', 'i' ],  # e.g. ÍBV
         ['Ł', 'l' ],  # e.g. Łódź
         ['Ö', 'oe' ], # e.g. Örebro
+        ['Ř', 'r' ],  # e.g. Řezák
         ['Ś', 's' ],  # e.g. Śląsk
         ['Š', 's' ],  # e.g. MŠK
         ['Ş', 's' ],  # e.g. Şüvälan
