@@ -147,8 +147,8 @@ class ValuesReader
       ## remove all whitespace and punctuation
       key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
       
-      ## remove special chars (e.g. %˚)
-      key = key.gsub( /[%˚]/, '' )
+      ## remove special chars (e.g. %˚°)
+      key = key.gsub( /[%˚°]/, '' )
 
       ##  turn accented char into ascii look alike if possible
       ##
