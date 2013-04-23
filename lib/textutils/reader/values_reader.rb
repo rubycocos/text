@@ -90,7 +90,7 @@ class ValuesReader
       #   - also allow . in keys e.g. world.quali.america, at.cup, etc.
       #   - also allow 0-9 in keys e.g. at.2, at.3.1, etc.
 
-      if values[0] =~ /^[a-z][a-z0-9.]*[a-z0-9]|[a-z]$/    # NB: key must start w/ a-z letter (NB: minimum one letter possible)
+      if values[0] =~ /^([a-z][a-z0-9.]*[a-z0-9]|[a-z])$/    # NB: key must start w/ a-z letter (NB: minimum one letter possible)
         key_col         = values[0]
         title_col       = values[1]
         more_cols       = values[2..-1]
