@@ -116,7 +116,7 @@ class ValuesReader
       if key_col == '<auto>'
         ## autogenerate key from first title
         key_col = title_to_key( titles[0] )
-        logger.debug "   autogen key >#{key_col}< from title >#{titles[0]}<"
+        logger.debug "   autogen key >#{key_col}< from title >#{titles[0]}<, textutils version #{TextUtils::VERSION}"
       end
       
       attribs[ :key ] = key_col
@@ -148,9 +148,19 @@ class ValuesReader
 
       ## remove all whitespace and punctuation
       key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
+
+      logger.debug "  before remove special chars >#{key}<"
       
       ## remove special chars (e.g. %°&)
-      key = key.gsub( /[%°&]/, '' )
+      key = key.gsub( /[%&°]/, '' )
+
+      logger.debug "  after remove special chars - step 1 >#{key}<"
+
+      ## remove &&&&  - try again / why is it not working?
+      key = key.gsub( /&/, '' )
+
+      logger.debug "  after remove special chars - step 2 >#{key}<"
+
 
       ##  turn accented char into ascii look alike if possible
       ##
