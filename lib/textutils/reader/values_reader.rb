@@ -90,6 +90,8 @@ class ValuesReader
       #   - also allow . in keys e.g. world.quali.america, at.cup, etc.
       #   - also allow 0-9 in keys e.g. at.2, at.3.1, etc.
 
+      # fix/todo: add support for leading underscore _
+      #   or allow keys starting w/ digits?
       if values[0] =~ /^([a-z][a-z0-9.]*[a-z0-9]|[a-z])$/    # NB: key must start w/ a-z letter (NB: minimum one letter possible)
         key_col         = values[0]
         title_col       = values[1]
@@ -147,8 +149,8 @@ class ValuesReader
       ## remove all whitespace and punctuation
       key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
       
-      ## remove special chars (e.g. %˚°)
-      key = key.gsub( /[%˚°]/, '' )
+      ## remove special chars (e.g. %°&)
+      key = key.gsub( /[%°&]/, '' )
 
       ##  turn accented char into ascii look alike if possible
       ##
