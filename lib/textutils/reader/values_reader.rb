@@ -149,18 +149,8 @@ class ValuesReader
       ## remove all whitespace and punctuation
       key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
 
-      logger.debug "  before remove special chars >#{key}<"
-      
       ## remove special chars (e.g. %°&)
       key = key.gsub( /[%&°]/, '' )
-
-      logger.debug "  after remove special chars - step 1 >#{key}<"
-
-      ## remove &&&&  - try again / why is it not working?
-      key = key.gsub( /&/, '' )
-
-      logger.debug "  after remove special chars - step 2 >#{key}<"
-
 
       ##  turn accented char into ascii look alike if possible
       ##
