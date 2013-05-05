@@ -63,7 +63,7 @@ class ValuesReader
 
       ### check for multiline record
       ##    must start with key and colon   e.g.   brands: 
-      if line =~ /^[a-z][a-z0-9.][a-z0-9]:/
+      if line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/
          # NB: every additional line is one value e.g. city:wien, etc.
          #  allows you to use any chars
          logger.debug "   multi-line record - add key-value >#{line}<"
