@@ -66,6 +66,8 @@ class ValuesReader
       if line =~ /^[a-z][a-z0-9.][a-z0-9]:/
          # NB: every additional line is one value e.g. city:wien, etc.
          #  allows you to use any chars
+         logger.debug "   multi-line record - add key-value >#{line}<"
+
          more_cols.unshift( line.dup )   # add value upfront to array (first value); lets us keep (optional) tags as last entry; fix!! see valuereaderEx v2
          next
       else
