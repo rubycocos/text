@@ -1,34 +1,24 @@
 # encoding: utf-8
 
 
-class File
-  def self.read_utf8( path )
-    text = open( path, 'r:bom|utf-8' ) do |file|
-      file.read
-    end
+### todo/fix: move to its on files in helper/helpers folder!!!
+### todo/fix: add tests for helpers!!!
 
-    # NB: for convenience: convert fancy unicode dashes/hyphens to plain ascii hyphen-minus
-    text = convert_unicode_dashes_to_plain_ascii( text, path: path )
+module TextUtils::UnicodeHelpers
 
-    text
-  end
-end # class File
+  # NB:
+  #  U_HYPHEN_MINUS is standard ascii hyphen/minus e.g. - 
+  #
+  #  see en.wikipedia.org/wiki/Dash
 
-
-# NB:
-#  U_HYPHEN_MINUS is standard ascii hyphen/minus e.g. -
-#
-#  see en.wikipedia.org/wiki/Dash
-
-U_HYPHEN              = "\u2010"  # unambigous hyphen
-U_NON_BREAKING_HYPHEN = "\u2011"  # unambigous non-breaking hyphen
-U_MINUS               = "\u2212"  # unambigous minus sign (html => &minus;)
-U_NDASH               = "\u2013"  # ndash (html => &ndash; ascii => --)
-U_MDASH               = "\u2014"  # mdash (html => &mdash; ascii => ---)
-
+  U_HYPHEN              = "\u2010"  # unambigous hyphen
+  U_NON_BREAKING_HYPHEN = "\u2011"  # unambigous non-breaking hyphen
+  U_MINUS               = "\u2212"  # unambigous minus sign (html => &minus;)
+  U_NDASH               = "\u2013"  # ndash (html => &ndash; ascii => --)
+  U_MDASH               = "\u2014"  # mdash (html => &mdash; ascii => ---)
 
   def convert_unicode_dashes_to_plain_ascii( text, opts = {} )
-    
+
     text = text.gsub( /(#{U_HYPHEN}|#{U_NON_BREAKING_HYPHEN}|#{U_MINUS}|#{U_NDASH}|#{U_MDASH})/ ) do |_|
 
       # puts "found U+#{'%04X' % $1.ord} (#{$1})"
@@ -60,11 +50,110 @@ U_MDASH               = "\u2014"  # mdash (html => &mdash; ascii => ---)
     text
   end # method convert_unicode_dashes_to_plain_ascii
 
+end # module TextUtils::UnicodeHelpers
 
-  ############
-  ### fix/todo: share helper for all text readers/parsers- where to put it?  
-  ###
-  
+
+
+module TextUtils::TitleHelpers
+
+  def title_to_key( title )
+
+   ## for example, used in readers/values_reader.rb ()
+
+
+      ## NB: downcase does NOT work for accented chars (thus, include in alternatives)
+      key = title.downcase
+
+      ### remove optional english translation in square brackets ([]) e.g. Wien [Vienna]
+      key = key.gsub( /\[.+\]/, '' )
+
+      ## remove optional longer title part in () e.g. Las Palmas (de Gran Canaria), Palma (de Mallorca)
+      key = key.gsub( /\(.+\)/, '' )
+      
+      ## remove optional longer title part in {} e.g. Ottakringer {Bio} or {Alkoholfrei}
+      ## todo: use for autotags? e.g. {Bio} => bio 
+      key = key.gsub( /\{.+\}/, '' )
+
+      ## remove all whitespace and punctuation
+      key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
+
+      ## remove special chars (e.g. %°&)
+      key = key.gsub( /[%&°]/, '' )
+
+      ##  turn accented char into ascii look alike if possible
+      ##
+      ## todo: add some more
+      ## see http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references  for more
+      
+      ## todo: add unicode codepoint name
+      
+      alternatives = [
+        ['ß', 'ss'],
+        ['æ', 'ae'],
+        ['ä', 'ae'],
+        ['ā', 'a' ],  # e.g. Liepājas
+        ['á', 'a' ],  # e.g. Bogotá, Králové
+        ['ã', 'a' ],  # e.g  São Paulo
+        ['ă', 'a' ],  # e.g. Chișinău
+        ['â', 'a' ],  # e.g  Goiânia
+        ['å', 'a' ],  # e.g. Vålerenga
+        ['ą', 'a' ],  # e.g. Śląsk
+        ['ç', 'c' ],  # e.g. São Gonçalo, Iguaçu, Neftçi
+        ['ć', 'c' ],  # e.g. Budućnost
+        ['č', 'c' ],  # e.g. Tradiční, Výčepní
+        ['é', 'e' ],  # e.g. Vélez, Králové
+        ['è', 'e' ],  # e.g. Rivières
+        ['ê', 'e' ],  # e.g. Grêmio
+        ['ě', 'e' ],  # e.g. Budějovice
+        ['ĕ', 'e' ],  # e.g. Svĕtlý
+        ['ė', 'e' ],  # e.g. Vėtra
+        ['ë', 'e' ],  # e.g. Skënderbeu
+        ['ğ', 'g' ],  # e.g. Qarabağ
+        ['ì', 'i' ],  # e.g. Potosì
+        ['í', 'i' ],  # e.g. Ústí
+        ['ł', 'l' ],  # e.g. Wisła, Wrocław
+        ['ñ', 'n' ],  # e.g. Porteño
+        ['ň', 'n' ],  # e.g. Plzeň, Třeboň
+        ['ö', 'oe'],
+        ['ő', 'o' ],  # e.g. Győri
+        ['ó', 'o' ],  # e.g. Colón, Łódź, Kraków
+        ['õ', 'o' ],  # e.g. Nõmme
+        ['ø', 'o' ],  # e.g. Fuglafjørdur, København
+        ['ř', 'r' ],  # e.g. Třeboň
+        ['ș', 's' ],  # e.g. Chișinău, București
+        ['ş', 's' ],  # e.g. Beşiktaş
+        ['š', 's' ],  # e.g. Košice
+        ['ť', 't' ],  # e.g. Měšťan
+        ['ü', 'ue'],
+        ['ú', 'u' ],  # e.g. Fútbol
+        ['ū', 'u' ],  # e.g. Sūduva
+        ['ů', 'u' ],  # e.g. Sládkův
+        ['ı', 'u' ],  # e.g. Bakı   # use u?? (Baku) why-why not?
+        ['ý', 'y' ],  # e.g. Nefitrovaný
+        ['ź', 'z' ],  # e.g. Łódź
+        ['ž', 'z' ],  # e.g. Domžale, Petržalka
+
+        ['Č', 'c' ],  # e.g. České
+        ['İ', 'i' ],  # e.g. İnter
+        ['Í', 'i' ],  # e.g. ÍBV
+        ['Ł', 'l' ],  # e.g. Łódź
+        ['Ö', 'oe' ], # e.g. Örebro
+        ['Ř', 'r' ],  # e.g. Řezák
+        ['Ś', 's' ],  # e.g. Śląsk
+        ['Š', 's' ],  # e.g. MŠK
+        ['Ş', 's' ],  # e.g. Şüvälan
+        ['Ú', 'u' ],  # e.g. Ústí, Újpest
+        ['Ž', 'z' ]   # e.g. Žilina
+      ]
+      
+      alternatives.each do |alt|
+        key = key.gsub( alt[0], alt[1] )
+      end
+
+      key
+  end # method title_to_key
+
+
   def title_esc_regex( title_unescaped )
       
       ##  escape regex special chars e.g. . to \. and ( to \( etc.
@@ -112,3 +201,39 @@ U_MDASH               = "\u2014"  # mdash (html => &mdash; ascii => ---)
 
       title
   end
+
+
+
+
+end # module TextUtils::TitleHelpers
+
+
+
+module TextUtils
+  # make helpers available as class methods e.g. TextUtils.convert_unicode_dashes_to_plain_ascii
+  extend UnicodeHelpers
+  extend TitleHelpers
+end
+
+
+
+class File
+  def self.read_utf8( path )
+    text = open( path, 'r:bom|utf-8' ) do |file|
+      file.read
+    end
+
+    # NB: for convenience: convert fancy unicode dashes/hyphens to plain ascii hyphen-minus
+    text = TextUtils.convert_unicode_dashes_to_plain_ascii( text, path: path )
+
+    text
+  end
+end # class File
+
+
+
+def title_esc_regex( title_unescaped )
+  puts "*** warn: depreceated fn call: use TextUtils.title_esc_regex() or include TextUtils::TitleHelpers"
+  TextUtils.title_esc_regex( title_unescaped )
+end
+
