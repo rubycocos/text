@@ -2,6 +2,8 @@
 
 ### read in a list of fixtures (that is, fixture names/files)
 
+# fix: move into TextUtils namespace/module!!
+
 class FixtureReader
 
   include LogUtils::Logging

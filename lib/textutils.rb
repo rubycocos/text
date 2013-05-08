@@ -21,6 +21,9 @@ require 'textutils/filter/comment_filter'
 require 'textutils/filter/erb_django_filter'
 require 'textutils/filter/erb_filter'
 
+require 'textutils/helper/unicode_helper'
+require 'textutils/helper/title_helper'
+
 require 'textutils/utils'
 require 'textutils/reader/code_reader'
 require 'textutils/reader/hash_reader'

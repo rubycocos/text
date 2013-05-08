@@ -4,6 +4,9 @@
 ## fix/todo: move to/merge into LineReader itself
 #   e.g. use  fromString c'tor ??? or similar??
 
+# fix: move into TextUtils namespace/module!!
+
+
 class StringLineReader
 
   include LogUtils::Logging

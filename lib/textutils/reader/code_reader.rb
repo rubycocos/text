@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+# fix: move into TextUtils namespace/module!!
+
 class CodeReader
 
   include LogUtils::Logging

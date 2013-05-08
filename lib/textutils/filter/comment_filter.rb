@@ -2,7 +2,7 @@
 module TextUtils
   module Filter
 
-def comments_percent_style( content, options={} )
+  def comments_percent_style( content, options={} )
 
     # remove comments
     # % comments

@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 
+# fix: move into TextUtils namespace/module!!
+
 class HashReader
 
   include LogUtils::Logging
