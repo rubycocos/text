@@ -1,35 +1,7 @@
-# encoding: utf-8
-
-# fix: move into TextUtils namespace/module!!
-
-class ValuesReader
-
-  include LogUtils::Logging
-
-  def initialize( path, more_values={} )
-    @path = path
-
-    @more_values = more_values
-
-    @data = File.read_utf8( @path )
-  end
 
 
-##########
-# todo/fix:
-#  create a new ValuesReaderEx or ValuesReaderV2 or similar
-#  - handle tags (last entry, split up into entries)
-#  - handle key:value  pairs (split up and return in ordered hash)
-# and so on - lets us reuse code for tags and more
-
-
-  def each_line   # support multi line records
-
-    inside_line = false   # todo: find a better name? e.g. line_found?
-    attribs = {}     # rename to new_attributes?
-    more_cols = []   # rename to more_values?
+  def each_line_old_single_line_records_only
       
-
     @data.each_line do |line|
   
       ## allow alternative comment lines
@@ -52,6 +24,7 @@ class ValuesReader
         next
       end
 
+
       # pass 1) remove possible trailing eol comment
       ##  e.g    -> nyc, New York   # Sample EOL Comment Here (with or without commas,,,,)
       ## becomes -> nyc, New York
@@ -61,28 +34,6 @@ class ValuesReader
       # pass 2) remove leading and trailing whitespace
       
       line = line.strip
-
-
-      ### check for multiline record
-      ##    must start with key and colon   e.g.   brands: 
-      if line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/
-         # NB: every additional line is one value e.g. city:wien, etc.
-         #  allows you to use any chars
-         logger.debug "   multi-line record - add key-value >#{line}<"
-
-         more_cols.unshift( line.dup )   # add value upfront to array (first value); lets us keep (optional) tags as last entry; fix!! see valuereaderEx v2
-         next
-      else
-        # NB: new record clears/ends multi-line record
-        
-        if inside_line  # check if we already processed a line? if yes; yield last line
-          yield( attribs, more_cols )
-          attribs   = {}
-          more_cols = []
-        end
-        inside_line = true
-      end
-
 
       ### guard escaped commas (e.g. \,)
       line = line.gsub( '\,', '@commma@' )
@@ -160,15 +111,8 @@ class ValuesReader
       
       attribs = attribs.merge( @more_values )  # e.g. merge country_id and other defaults if present
                         
+      yield( attribs, more_cols )
+
     end # each lines
 
-    # do NOT forget to yield last line (if present/processed)
-    if inside_line
-      yield( attribs, more_cols )
-    end
-
-
   end # method each_line
-
-
-end # class ValuesReader

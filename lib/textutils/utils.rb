@@ -6,6 +6,7 @@ module TextUtils
   # make helpers available as class methods e.g. TextUtils.convert_unicode_dashes_to_plain_ascii
   extend UnicodeHelper
   extend TitleHelper
+  extend AddressHelper
 end
 
 

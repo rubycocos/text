@@ -23,6 +23,8 @@ require 'textutils/filter/erb_filter'
 
 require 'textutils/helper/unicode_helper'
 require 'textutils/helper/title_helper'
+require 'textutils/helper/address_helper'
+require 'textutils/helper/value_helper'
 
 require 'textutils/utils'
 require 'textutils/reader/code_reader'

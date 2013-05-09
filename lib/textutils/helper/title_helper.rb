@@ -4,29 +4,57 @@
 module TextUtils
   module TitleHelper
 
+  def strip_translations( title )
+      # remove optional english translation in square brackets ([])
+      # e.g. Wien [Vienna]  =>  Wien
+
+      title.gsub( /\[.+\]/, '' )
+  end
+
+  def strip_subtitles( title )
+      # remove optional longer title part in ()
+      # e.g. Las Palmas (de Gran Canaria) => Las Palmas
+      #      Palma (de Mallorca) => Palma
+
+      title.gsub( /\(.+\)/, '' )
+  end
+
+  def strip_tags( title )   # todo: use an alias or rename for better name ??
+      # remove optional longer title part in {}
+      #  e.g. Ottakringer {Bio}   => Ottakringer
+      #       Ottakringer {Alkoholfrei} => Ottakringer
+      #
+      # todo: use for autotags? e.g. {Bio} => bio 
+      
+      title.gsub( /\{.+\}/, '' )
+  end
+
+  def strip_whitespaces( title )
+      # remove all whitespace and punctuation
+      title.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
+  end
+
+  def strip_special_chars( title )
+      # remove special chars (e.g. %°&)
+      title.gsub( /[%&°]/, '' )
+  end
+
   def title_to_key( title )
 
-   ## NB: used in/moved from readers/values_reader.rb
-
+      ## NB: used in/moved from readers/values_reader.rb
 
       ## NB: downcase does NOT work for accented chars (thus, include in alternatives)
       key = title.downcase
 
-      ### remove optional english translation in square brackets ([]) e.g. Wien [Vienna]
-      key = key.gsub( /\[.+\]/, '' )
+      key = strip_translations( key )
 
-      ## remove optional longer title part in () e.g. Las Palmas (de Gran Canaria), Palma (de Mallorca)
-      key = key.gsub( /\(.+\)/, '' )
-      
-      ## remove optional longer title part in {} e.g. Ottakringer {Bio} or {Alkoholfrei}
-      ## todo: use for autotags? e.g. {Bio} => bio 
-      key = key.gsub( /\{.+\}/, '' )
+      key = strip_subtitles( key )
 
-      ## remove all whitespace and punctuation
-      key = key.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
+      key = strip_tags( key )
 
-      ## remove special chars (e.g. %°&)
-      key = key.gsub( /[%&°]/, '' )
+      key = strip_whitespaces( key )
+
+      key = strip_special_chars( key )
 
       ##  turn accented char into ascii look alike if possible
       ##
