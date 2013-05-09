@@ -29,7 +29,7 @@ class FixtureReader
       if value_wild.kind_of?( String ) # assume single fixture name
         @ary << value_wild
       elsif value_wild.kind_of?( Array ) # assume array of fixture names as strings
-        @ary = ary + value_wild
+        @ary = @ary + value_wild
       else
         logger.error "unknow fixture type in setup (yaml key:#{key_wild.class.name} >>#{key}<<, value:#{value_wild.class.name} >>#{value_wild}<<); skipping"
       end
