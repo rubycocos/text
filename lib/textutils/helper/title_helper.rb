@@ -4,6 +4,9 @@
 module TextUtils
   module TitleHelper
 
+
+
+
   def strip_translations( title )
       # remove optional english translation in square brackets ([])
       # e.g. Wien [Vienna]  =>  Wien

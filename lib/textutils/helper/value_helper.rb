@@ -34,5 +34,26 @@ module TextUtils
   end
 
 
+  def find_grade( text )  # NB: returns ary [grade,text] / two values
+    grade = 4  # defaults to grade 4  e.g  *** => 1, ** => 2, * => 3, -/- => 4
+
+    text = text.sub( /\s+(\*{1,3})\s*$/ ) do |_|  # NB: stars must end field/value
+      if $1 == '***'
+        grade = 1
+      elsif $1 == '**'
+        grade = 2
+      elsif $1 == '*'
+        grade = 3
+      else
+        # unknown grade; not possible, is'it?
+      end
+      ''  # remove * from title if found
+    end
+
+    [grade,text]
+  end
+
+
+
   end # module ValueHelper
 end # module TextUtils

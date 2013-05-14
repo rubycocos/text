@@ -24,6 +24,30 @@ module TextUtils
 
     new_address_line
   end
+  
+
+  #  todo/fix: add _in_adr or _in_addr to name - why? why not?
+
+  def find_city_for_country( country_key, address )
+
+    return nil if address.blank?    # do NOT process nil or empty address lines; sorry
+
+    lines = address.split( '//' )
+
+    if country_key == 'at' || country_key == 'de'
+      # first line strip numbers (assuming zip code) and whitespace
+      line1 = lines[0]
+      line1 = line1.gsub( /\b[0-9]+\b/, '' )   # use word boundries (why? why not?)
+      line1 = line1.strip
+      
+      return nil if line1.blank?   # nothing left sorry; better return nil
+      
+      line1   # assume its the city
+    else
+      nil   # unsupported country/address schema for now; sorry
+    end
+  end
+  
 
   end # module AddressHelper
 end # module TextUtils

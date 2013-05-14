@@ -5,6 +5,9 @@
 class ValuesReader
 
   include LogUtils::Logging
+  
+  include TextUtils::ValueHelper # e.g. includes find_grade()
+
 
   def initialize( path, more_values={} )
     @path = path
@@ -68,7 +71,7 @@ class ValuesReader
       if line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/
          # NB: every additional line is one value e.g. city:wien, etc.
          #  allows you to use any chars
-         logger.debug "   multi-line record - add key-value >#{line}<"
+         logger.debug "   multi-line record - add key-value »#{line}«"
 
          more_cols.unshift( line.dup )   # add value upfront to array (first value); lets us keep (optional) tags as last entry; fix!! see valuereaderEx v2
          next
@@ -85,18 +88,17 @@ class ValuesReader
 
 
       ### guard escaped commas (e.g. \,)
-      line = line.gsub( '\,', '@commma@' )
+      line = line.gsub( '\,', '♣' )  # use black club suit/=shamrock char for escaped separator
       
       ## use generic separator (allow us to configure separator)
-      line = line.gsub( ',', '@sep@')
+      line = line.gsub( ',', '♦')  # use black diamond suit for separator
       
       ## restore escaped commas (before split)
-      line = line.gsub( '@commma@', ',' )
+      line = line.gsub( '♣', ',' )
 
+      logger.debug "line: »#{line}«"
 
-      logger.debug "line: >>#{line}<<"
-
-      values = line.split( '@sep@' )
+      values = line.split( '♦' )
       
       # pass 1) remove leading and trailing whitespace for values
 
@@ -107,14 +109,14 @@ class ValuesReader
       
       values = values.select do |value|
         if value =~ /^#/  ## start with # treat it as a comment column; e.g. remove it
-          logger.debug "   removing column with value >>#{value}<<"
+          logger.debug "   removing column with value »#{value}«"
           false
         else
           true
         end
       end
       
-      logger.debug "  values: >>#{values.join('<< >>')}<<"
+      logger.debug "  values: »#{values.join('« »')}«"
       
       
       ### todo/fix: allow check - do NOT allow mixed use of with key and w/o key
@@ -141,6 +143,15 @@ class ValuesReader
 
       attribs = {}
 
+      ## check title_col for grade (e.g. ***/**/*) and use returned stripped title_col if exits
+      grade, title_col = find_grade( title_col )
+
+      # NB: for now - do NOT include default grade e.g. if grade (***/**/*) not present; attrib will not be present too
+      if grade == 1 || grade == 2 || grade == 3  # grade found/present
+        logger.debug "   found grade #{grade} in title"
+        attribs[:grade] = grade
+      end
+
       ## title (split of optional synonyms)
       # e.g. FC Bayern Muenchen|Bayern Muenchen|Bayern
       titles = title_col.split('|')
@@ -153,7 +164,7 @@ class ValuesReader
       if key_col == '<auto>'
         ## autogenerate key from first title
         key_col = TextUtils.title_to_key( titles[0] )
-        logger.debug "   autogen key >#{key_col}< from title >#{titles[0]}<, textutils version #{TextUtils::VERSION}"
+        logger.debug "   autogen key »#{key_col}« from title »#{titles[0]}«, textutils version #{TextUtils::VERSION}"
       end
       
       attribs[ :key ] = key_col
