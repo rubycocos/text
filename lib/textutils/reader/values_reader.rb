@@ -91,14 +91,14 @@ class ValuesReader
       line = line.gsub( '\,', '♣' )  # use black club suit/=shamrock char for escaped separator
       
       ## use generic separator (allow us to configure separator)
-      line = line.gsub( ',', '♦')  # use black diamond suit for separator
+      line = line.gsub( ',', '›')
       
       ## restore escaped commas (before split)
       line = line.gsub( '♣', ',' )
 
       logger.debug "line: »#{line}«"
 
-      values = line.split( '♦' )
+      values = line.split( '›' )
       
       # pass 1) remove leading and trailing whitespace for values
 

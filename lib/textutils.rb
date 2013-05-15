@@ -22,6 +22,7 @@ require 'textutils/filter/erb_django_filter'
 require 'textutils/filter/erb_filter'
 
 require 'textutils/helper/unicode_helper'
+require 'textutils/helper/tag_helper'
 require 'textutils/helper/title_helper'
 require 'textutils/helper/address_helper'
 require 'textutils/helper/value_helper'
