@@ -2,6 +2,39 @@
 
 # fix: move into TextUtils namespace/module!!
 
+## todo/fix: find a better name than HashReaderV2 (HashReaderPlus?) ??
+
+class ValuesReaderV2
+  include LogUtils::Logging
+
+  def initialize( name, include_path, more_attribs={} )
+    @name          = name
+    @include_path  = include_path
+    @more_attribs  = more_attribs
+  end
+
+  attr_reader :name
+  attr_reader :include_path
+  attr_reader :more_attribs
+
+  def each_line
+    path          = "#{include_path}/#{name}.txt"
+    reader        = ValuesReader.new( path, more_attribs )
+
+    logger.info "parsing data '#{name}' (#{path})..."
+
+    reader.each_line do |attribs, values|
+      yield( attribs, values )
+    end
+
+    ## fix: move Prop table to props gem - why? why not??
+    WorldDb::Models::Prop.create_from_fixture!( name, path )
+  end
+
+end # class ValuesReaderV2
+
+
+
 class ValuesReader
 
   include LogUtils::Logging
