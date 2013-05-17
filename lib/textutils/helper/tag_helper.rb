@@ -19,13 +19,13 @@ module TextUtils
     tag_keys # return tag keys as ary
   end
 
-  def find_tags_in_hash!( h )
-    # NB: will remove :tags from hash
+  def find_tags_in_attribs!( attribs )
+    # NB: will remove :tags from attribs hash
 
-    if h[:tags].present?
-      tag_keys = find_tags( h[:tags] )
-      h.delete(:tags)
-      tag_keys   # return tag keys as ary
+    if attribs[:tags].present?
+      tag_keys = find_tags( attribs[:tags] )
+      attribs.delete(:tags)
+      tag_keys   # return tag keys as ary of strings
     else
       []  # nothing found; return empty ary
     end

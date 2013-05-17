@@ -5,15 +5,78 @@ module TextUtils
   module ValueHelper
 
 
+  def match_country( value )
+    if value =~ /^country:/   ## country:
+      country_key = value[8..-1]  ## cut off country: prefix
+      country = Country.find_by_key!( country_key )
+      yield( country )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
   def is_region?( value )
     # assume region code e.g. TX or N
     value =~ /^[A-Z]{1,2}$/
   end
 
+  ## fix/todo: use match_region_for_country! w/ !!! why? why not?
+  def match_region_for_country( value, country_id )  ## NB: required country_id 
+    if value =~ /^region:/   ## region:
+      region_key = value[7..-1]  ## cut off region: prefix
+      region = Region.find_by_key_and_country_id!( region_key, country_id )
+      yield( region )
+      true  # bingo - match found
+    elsif is_region?( value )  ## assume region code e.g. TX or N
+      region = Region.find_by_key_and_country_id!( value.downcase, country_id )
+      yield( region )
+      true  # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
+  def match_city( value )
+    if value =~ /^city:/   ## city:
+      city_key = value[5..-1]  ## cut off city: prefix
+      city = City.find_by_key( city_key )
+      yield( city )  # NB: might be nil (city not found)
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
+  def match_brewery( value )
+    if value =~ /^by:/   ## by:  -brewed by/brewery
+      brewery_key = value[3..-1]  ## cut off by: prefix
+      brewery = Brewery.find_by_key!( brewery_key )
+      yield( brewery )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
   def is_year?( value )
     # founded/established year e.g. 1776
     value =~ /^[0-9]{4}$/
   end
+
+  def match_year( value )
+    if is_year?( value )  # founded/established year e.g. 1776
+      yield( value.to_i )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
 
   def is_website?( value )
     # check for url/internet address e.g. www.ottakringer.at
@@ -23,6 +86,18 @@ module TextUtils
     # fix: support more url format (e.g. w/o www. - look for .com .country code etc.)
     value =~ /^www\.|\.com$/
   end
+
+  def match_website( value )
+    if is_website?( value )   # check for url/internet address e.g. www.ottakringer.at
+      # fix: support more url format (e.g. w/o www. - look for .com .country code etc.)
+      yield( value )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
 
   def is_address?( value )
     # if value includes // assume address e.g. 3970 Weitra // Sparkasseplatz 160
