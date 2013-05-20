@@ -11,14 +11,29 @@ class ValuesReaderV2
     @name          = name
     @include_path  = include_path
     @more_attribs  = more_attribs
+    
+    # map name to name_real_path
+    #   name might include !/ for virtual path (gets cut off)
+    #   e.g. at-austria!/w-wien/beers becomse w-wien/beers
+
+    pos = @name.index( '!/')
+    if pos.nil?
+      @name_real_path = @name   # not found; real path is the same as name
+    else
+      # cut off everything until !/ e.g.
+      #   at-austria!/w-wien/beers becomes
+      #   w-wien/beers
+      @name_real_path = @name[ (pos+2)..-1 ]
+    end
   end
 
   attr_reader :name
+  attr_reader :name_real_path
   attr_reader :include_path
   attr_reader :more_attribs
 
   def each_line
-    path          = "#{include_path}/#{name}.txt"
+    path          = "#{include_path}/#{name_real_path}.txt"
     reader        = ValuesReader.new( path, more_attribs )
 
     logger.info "parsing data '#{name}' (#{path})..."
