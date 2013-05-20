@@ -5,9 +5,13 @@ module TextUtils
   module ValueHelper
 
 
+  ## todo/check: add to pair of matchers??
+  # e.g. match_country and match_country!
+  #  - match_country will use find_by_key and match_country will use find_by_key! - why? why not?
+
   def match_country( value )
-    if value =~ /^country:/   ## country:
-      country_key = value[8..-1]  ## cut off country: prefix
+    if value =~ /^country:/       # country:
+      country_key = value[8..-1]  # cut off country: prefix
       country = Country.find_by_key!( country_key )
       yield( country )
       true # bingo - match found
@@ -15,6 +19,28 @@ module TextUtils
       false # no match found
     end
   end
+
+  def match_supra( value )
+    if value =~ /^supra:/         # supra:
+      country_key = value[6..-1]  # cut off supra: prefix
+      country = Country.find_by_key!( country_key )
+      yield( country )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+  def match_supra_flag( value )  # supranational (country)
+    if value =~ /^supra$/   # supra(national)
+      yield( true )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
 
 
   def is_region?( value )
@@ -39,7 +65,7 @@ module TextUtils
   end
 
 
-  def match_city( value )
+  def match_city( value )  # NB: might be nil (city not found)
     if value =~ /^city:/   ## city:
       city_key = value[5..-1]  ## cut off city: prefix
       city = City.find_by_key( city_key )
@@ -49,6 +75,39 @@ module TextUtils
       false # no match found
     end
   end
+
+
+  def match_metro( value )
+    if value =~ /^metro:/   ## metro:
+      city_key = value[6..-1]  ## cut off metro: prefix
+      city = City.find_by_key!( city_key )   # NB: parent city/metro required, that is, lookup w/ !
+      yield( city )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+  def match_metro_flag( value )
+    if value =~ /^metro$/   # metro(politan area)
+      yield( true )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+  def match_metro_pop( value )
+    if value =~ /^m:/   # m:
+      num = value[2..-1].gsub(/[ _]/, '').to_i   # cut off m: prefix; allow space and _ in number
+      yield( num )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
 
 
   def match_brewery( value )
@@ -76,6 +135,31 @@ module TextUtils
       false # no match found
     end
   end
+
+
+  def match_km_squared( value )
+    ## allow numbers like 453 km² or 45_000 km2
+    if value =~ /^([0-9][0-9 _]+[0-9]|[0-9]{1,2})(?:\s*(?:km2|km²)\s*)$/
+      num = value.gsub( 'km2', '').gsub( 'km²', '' ).gsub(/[ _]/, '').to_i
+      yield( num )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+  def match_number( value )
+    ## numeric (nb: can use any _ or spaces inside digits e.g. 1_000_000 or 1 000 000)
+    if value =~ /^([0-9][0-9 _]+[0-9])|([0-9]{1,2})$/
+      num = value.gsub(/[ _]/, '').to_i
+      yield( num )
+      true # bingo - match found
+    else
+      false # no match found
+    end
+  end
+
+
 
 
   def is_website?( value )
