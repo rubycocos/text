@@ -1,6 +1,6 @@
 
 module TextUtils
 
-  VERSION = '0.5.13'
+  VERSION = '0.6.0'
 
 end   # module TextUtils

@@ -4,31 +4,33 @@
 module TextUtils
   module AddressHelper
 
-  def normalize_address( old_address_line )
+  def normalize_addr( old_address )
     # for now only checks german 5-digit zip code
     #
     #  e.g.  Alte Plauener Straße 24 // 95028 Hof  becomes
     #        95028 Hof // Alte Plauener Straße 24 
 
-    new_address_line = old_address_line   # default - do nothing - just path through
+    new_address = old_address   # default - do nothing - just path through
 
-    lines = old_address_line.split( '//' )
+    lines = old_address.split( '//' )
 
     if lines.size == 2   # two lines / check for switching lines
       line1 = lines[0].strip
       line2 = lines[1].strip
       if line2 =~ /^[0-9]{5}\s/
-        new_address_line = "#{line2} // #{line1}"   # swap - let line w/ 5-digit zip code go first
+        new_address = "#{line2} // #{line1}"   # swap - let line w/ 5-digit zip code go first
       end
     end
 
-    new_address_line
+    new_address
   end
-  
+
 
   #  todo/fix: add _in_adr or _in_addr to name - why? why not?
+  #  -- make country_key optional - why? why not?
+  #      n move to second pos; use opts={} why? why not?
 
-  def find_city_for_country( country_key, address )
+  def find_city_in_addr( address, country_key )
 
     return nil if address.blank?    # do NOT process nil or empty address lines; sorry
 
