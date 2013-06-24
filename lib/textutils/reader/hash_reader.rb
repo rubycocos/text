@@ -46,6 +46,22 @@ class HashReaderV2
     WorldDb::Models::Prop.create_from_fixture!( name, path )
   end
 
+
+  def each_typed
+    path          = "#{include_path}/#{name_real_path}.yml"
+    reader        = HashReader.new( path )
+
+    logger.info "parsing data '#{name}' (#{path})..."
+
+    reader.each_typed do |key, value|
+      yield( key, value )
+    end
+
+    ## fix: move Prop table to props gem - why? why not??
+    WorldDb::Models::Prop.create_from_fixture!( name, path )
+  end
+
+
 end # class HashReaderV2
 
 
@@ -87,7 +103,7 @@ class HashReader
     ## nb: escape only if key e.g. no: or "free standing" value on its own line e.g.
     ##   no: no
 
-    text = text.gsub( /^([ ]*)(ON|On|on|NO|No|no|N|n|Y|y)[ ]*:/ ) do |value|
+    text = text.gsub( /^([ ]*)(ON|On|on|OFF|Off|off|YES|Yes|yes|NO|No|no|Y|y|N|n)[ ]*:/ ) do |value|
       logger.warn "hash reader - found implicit bool (#{$1}#{$2}) for key; adding quotes to turn into string; see yaml.org/refcard.html (path=#{path})"
       # nb: preserve leading spaces for structure - might be significant
       "#{$1}'#{$2}':"  # add quotes to turn it into a string (not bool e.g. true|false)
@@ -96,8 +112,10 @@ class HashReader
     ## nb: value must be freestanding (only allow optional eol comment)
     ##  do not escape if part of string sequence e.g.
     ##  key: nb,nn,no,se   => nb,nn,'no',se  -- avoid!!
+    #
+    #  check: need we add true|false too???
 
-    text = text.gsub( /:[ ]+(ON|On|on|NO|No|no|N|n|Y|y)[ ]*($| #.*$)/ ) do |value|
+    text = text.gsub( /:[ ]+(ON|On|on|OFF|Off|off|YES|Yes|yes|NO|No|no|Y|y|N|n)[ ]*($| #.*$)/ ) do |value|
       logger.warn "hash reader - found implicit bool (#{$1}) for value; adding quotes to turn into string; see yaml.org/refcard.html (path=#{path})"
       ": '#{$1}'"  # add quotes to turn it into a string (not bool e.g. true|false)
     end
