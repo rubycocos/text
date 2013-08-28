@@ -34,3 +34,5 @@ require 'textutils/reader/line_reader'
 require 'textutils/reader/values_reader'
 require 'textutils/reader/fixture_reader'
 
+require 'textutils/classifier'
+

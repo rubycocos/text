@@ -3,6 +3,7 @@ Manifest.txt
 README.markdown
 Rakefile
 lib/textutils.rb
+lib/textutils/classifier.rb
 lib/textutils/filter/code_filter.rb
 lib/textutils/filter/comment_filter.rb
 lib/textutils/filter/erb_django_filter.rb
