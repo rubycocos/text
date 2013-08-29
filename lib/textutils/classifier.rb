@@ -28,7 +28,14 @@ class Classifier
     @h[ key ] += words
   end
 
+  def classify_file( path )
+    classify( File.read_utf8( path ) )
+  end
+
   def classify( text_with_comments )
+
+    ## check encoding
+    logger.debug "  classify - text.encoding: #{text_with_comments.encoding.name}"
     
     # nb: strip comments first
     text = strip_comments( text_with_comments )
@@ -65,8 +72,17 @@ class Classifier
     # for debugging dump setup (that is, keys w/ words etc.)
 
     @h.each_with_index do |(key, words), i|
-      puts "key #{key} (#{i+1}/#{@h.size}) - #{words.size} words:"
-      pp words
+      logger.debug "key #{key} (#{i+1}/#{@h.size}) - #{words.size} words:"
+      logger.debug words.inspect
+      
+      ## check encoding of words (trouble w/ windows cp850 argh!!!)
+      last_encoding_name = ''
+      words.each do |word|
+        if last_encoding_name != word.encoding.name
+          logger.debug "  encoding: #{word.encoding.name}"
+          last_encoding_name = word.encoding.name
+        end
+      end
     end 
   end
 
