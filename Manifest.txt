@@ -9,10 +9,13 @@ lib/textutils/filter/comment_filter.rb
 lib/textutils/filter/erb_django_filter.rb
 lib/textutils/filter/erb_filter.rb
 lib/textutils/helper/address_helper.rb
+lib/textutils/helper/date_helper.rb
+lib/textutils/helper/hypertext_helper.rb
 lib/textutils/helper/tag_helper.rb
 lib/textutils/helper/title_helper.rb
 lib/textutils/helper/unicode_helper.rb
 lib/textutils/helper/value_helper.rb
+lib/textutils/helper/xml_helper.rb
 lib/textutils/reader/code_reader.rb
 lib/textutils/reader/fixture_reader.rb
 lib/textutils/reader/hash_reader.rb
@@ -21,4 +24,6 @@ lib/textutils/reader/values_reader.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
 test/helper.rb
-test/test_helper.rb
+test/test_hypertext_helper.rb
+test/test_title_helper.rb
+test/test_unicode_helper.rb

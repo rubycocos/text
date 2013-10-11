@@ -21,6 +21,10 @@ require 'textutils/filter/comment_filter'
 require 'textutils/filter/erb_django_filter'
 require 'textutils/filter/erb_filter'
 
+require 'textutils/helper/date_helper'
+require 'textutils/helper/hypertext_helper'
+require 'textutils/helper/xml_helper'
+
 require 'textutils/helper/unicode_helper'
 require 'textutils/helper/tag_helper'
 require 'textutils/helper/title_helper'

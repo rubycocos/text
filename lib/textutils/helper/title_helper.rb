@@ -4,6 +4,11 @@
 module TextUtils
   module TitleHelper
 
+####
+# - todo: use new additional sub module ???
+#     e.g. TextUtils::Reader::TagHelper
+#   lets us use "classic" web helpers a la rails
+#   find a good name for sub module -  Reader? Fixtures? Values? Parser? 
 
 
 

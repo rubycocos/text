@@ -49,7 +49,7 @@ module TextUtils
       nil   # unsupported country/address schema for now; sorry
     end
   end
-  
+
 
   end # module AddressHelper
 end # module TextUtils
