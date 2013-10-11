@@ -8,7 +8,7 @@ Hoe.spec 'textutils' do
   self.summary = 'textutils - Text Filters, Helpers, Readers and More'
   self.description = summary
 
-  self.urls    = ['http://geraldb.github.com/textutils']
+  self.urls    = ['https://github.com/rubylibs/textutils']
 
   self.author  = 'Gerald Bauer'
   self.email   = 'webslideshow@googlegroups.com'
