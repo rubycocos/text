@@ -8,15 +8,28 @@ def strip_tags( ht )
   ### to be done
   ## strip markup tags; return plain text; use brute force for now
   # check at least for presence of required a-z+ tag names
-  
+  #
+  #  note: make sure we cover h1/h2/h3/h4/h5/h6  tag w/ number!!
+
   ### ht.gsub( /<[^>]+>/, '' ) - old simple
 
   ## todo: add strip comments e.g. <!-- xxxx --> ???
   ##  or use new strip_comments( ht )
 
-  ht = ht.gsub( /<([a-z]+)\s*\/>/i, '' )       # remove xml-style empty tags eg. <br /> or <br/>
-  ht = ht.gsub( /<([a-z]+)(\s+[^>]*)?>/i, '' ) # opening tag <p>
-  ht = ht.gsub( /<\/([a-z]+)\s*>/i, '' )       # closing tag e.g. </p>
+
+  ## note: follow offical xml spec
+  ##  - allows for first char:  (Letter | '_' | ':')
+  ##  - allows for followup chars: (Letter | Digit | '_' | ':' | '.' | '-')
+
+  tag_name_pattern = "[a-z_:][a-z0-9_:.\\-]*"
+
+  empty_tag_pattern   =  "<#{tag_name_pattern}\\s*/>"
+  opening_tag_pattern =  "<#{tag_name_pattern}(\\s+[^>]*)?>"
+  closing_tag_pattern =  "</#{tag_name_pattern}\\s*>"
+
+  ht = ht.gsub( /#{empty_tag_pattern}/i, '' )    # remove xml-style empty tags eg. <br /> or <br/>
+  ht = ht.gsub( /#{opening_tag_pattern}/i, '' )  # opening tag <p>
+  ht = ht.gsub( /#{closing_tag_pattern}/i, '' )  # closing tag e.g. </p>
   ht
 end
 
@@ -52,8 +65,8 @@ def whitelist( ht, tags, opts={} )
   #  -- note: will NOT strip comments for now e.g. <!-- -->
   ht = strip_tags( ht )
 
-  pp ht  # fix: debugging indo - remove
-    
+  ## pp ht  # fix: debugging indo - remove
+
   ############################################
   # step three - restore whitelisted tags
 

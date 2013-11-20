@@ -13,6 +13,44 @@ class TestHypertextHelper < MiniTest::Unit::TestCase
 
   include TextUtils::HypertextHelper   #  lets us use textify, etc.
 
+  def test_strip_tags
+    ## empty tags
+    assert_equal '', strip_tags( '<hr />' )
+    assert_equal '', strip_tags( '<hr/>' )
+    assert_equal '', strip_tags( '<my-emtpy/>' )
+    assert_equal '', strip_tags( '<my-emtpy />' )
+
+    assert_equal 'hello', strip_tags( '<h1>hello</h1>' )
+    assert_equal 'hello', strip_tags( '<h2>hello</h2>' )
+    assert_equal 'hello', strip_tags( '<p>hello</p>' )
+    assert_equal 'hello', strip_tags( '<div>hello</div>' )
+    assert_equal 'hello', strip_tags( '<my-header>hello</my-header>' )
+
+    assert_equal 'hello', strip_tags( '<h1 id="test">hello</h1>' )
+    assert_equal 'hello', strip_tags( '<p id="test">hello</p>' )
+    assert_equal 'hello', strip_tags( '<div id="test">hello</div>' )
+    assert_equal 'hello', strip_tags( '<my-header id="test">hello</my-header>' )
+    
+    ## check case in-sensitive
+    assert_equal '', strip_tags( '<HR />' )
+    assert_equal '', strip_tags( '<hR />' )
+    assert_equal '', strip_tags( '<Hr />' )
+    assert_equal '', strip_tags( '<HR/>' )
+    assert_equal '', strip_tags( '<My-EmTpY/>' )
+    assert_equal '', strip_tags( '<My-EmTpY />' )
+
+    assert_equal 'hello', strip_tags( '<H1>hello</H1>' )
+    assert_equal 'hello', strip_tags( '<H2>hello</h2>' )
+    assert_equal 'hello', strip_tags( '<P>hello</P>' )
+    assert_equal 'hello', strip_tags( '<DiV>hello</dIv>' )
+    assert_equal 'hello', strip_tags( '<mY-hEaDer>hello</MY-HEADER>' )
+
+    assert_equal 'hello', strip_tags( '<H1 ID="test">hello</h1>' )
+    assert_equal 'hello', strip_tags( '<P id="test">hello</p>' )
+    assert_equal 'hello', strip_tags( '<DIV Id="test">hello</dIV>' )
+    assert_equal 'hello', strip_tags( '<MY-HEADER iD="test">hello</mY-hEaDeR>' )
+  end
+
 
   def test_stylesheet_link_tag
     hyout = "<link rel='stylesheet' type='text/css' href='hello.css'>"
