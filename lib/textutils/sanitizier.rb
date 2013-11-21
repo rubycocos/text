@@ -6,9 +6,10 @@ class Sanitizier
 
   include LogUtils::Logging
 
-  @@ignore_tags = [ :head, :script, :style ]
-  @@inline_tags = [ :span, :b, :i, :u ]
-  @@block_tags  = [ :p, :div, :ul, :ol ]
+  @@ignore_tags = %w{ head script style }
+  @@inline_tags = %w{ span b i u }
+  @@block_tags  = %w{ p div ul ol }
+
 
   def initialize( ht )
     @ht = ht  # hypertext (html source)

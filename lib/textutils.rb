@@ -16,6 +16,9 @@ require 'logutils'
 
 require 'textutils/version'
 
+require 'textutils/patterns'   # regex patterns for reuse
+require 'textutils/sanitizier'
+
 require 'textutils/filter/code_filter'
 require 'textutils/filter/comment_filter'
 require 'textutils/filter/erb_django_filter'

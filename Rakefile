@@ -11,7 +11,7 @@ Hoe.spec 'textutils' do
   self.urls    = ['https://github.com/rubylibs/textutils']
 
   self.author  = 'Gerald Bauer'
-  self.email   = 'webslideshow@googlegroups.com'
+  self.email   = 'ruby-talk@ruby-lang.org'
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.markdown'

@@ -16,11 +16,13 @@ lib/textutils/helper/title_helper.rb
 lib/textutils/helper/unicode_helper.rb
 lib/textutils/helper/value_helper.rb
 lib/textutils/helper/xml_helper.rb
+lib/textutils/patterns.rb
 lib/textutils/reader/code_reader.rb
 lib/textutils/reader/fixture_reader.rb
 lib/textutils/reader/hash_reader.rb
 lib/textutils/reader/line_reader.rb
 lib/textutils/reader/values_reader.rb
+lib/textutils/sanitizier.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
 test/helper.rb

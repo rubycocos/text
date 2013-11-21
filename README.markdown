@@ -4,7 +4,7 @@
 * bugs  :: [github.com/rubylibs/textutils/issues](https://github.com/rubylibs/textutils/issues)
 * gem   :: [rubygems.org/gems/textutils](https://rubygems.org/gems/textutils)
 * rdoc  :: [rubydoc.info/gems/textutils](http://rubydoc.info/gems/textutils)
-* forum :: [groups.google.com/group/webslideshow](https://groups.google.com/group/webslideshow)
+* forum :: [ruby-talk@ruby-lang.org](www.ruby-lang.org/en/community/mailing-lists/)
 
 
 ## Filters
