@@ -39,8 +39,14 @@ def find_data_path_from_gemfile_gitref( name )
 
   # escape chars for regex e.g. . becomes \.
   name_esc = name.gsub( '.', '\.' )
-  name_regex = /\/(#{name_esc}-[a-z0-9]+)|(#{name_esc})\/lib$/  # e.g. /\/(beer\.db-[a-z0-9]+)|(beer\.db)\//
 
+
+  # note:
+  #  - hexdigest must be 12 chars e.g. b7d1c9619a54 or similar
+  
+  # e.g. match /\/(beer\.db-[a-z0-9]+)|(beer\.db)\//
+
+  name_regex = /\/((#{name_esc}-[a-z0-9]{12})|(#{name_esc}))\/lib$/
   candidates = []
   $LOAD_PATH.each do |path|
     if path =~ name_regex
