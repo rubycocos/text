@@ -138,37 +138,37 @@ class ValuesReader
           attribs, more_values = find_key_n_title( values )
           attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
           yield( attribs, more_values )
-          blank_counter  = 0
           values         = []
         end
 
         inside_record  = true
+        blank_counter  = 0
 
         # NB: every additional line is one value e.g. city:wien, etc.
         #  allows you to use any chars
         logger.debug "   multi-line record w/ key »#{$1}«"
 
         values         = [$1.dup]    # add key as first value in ary
-      elsif inside_record && line =~ /\/{2}/ # check address line (must contain //)
+      elsif inside_record && blank_counter == 0 && line =~ /\/{2}/ # check address line (must contain //)
         values += [line.dup]     # assume single value column (no need to escape commas)
-      elsif inside_record && line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/ # check key: value pair
+      elsif inside_record && blank_counter == 0 && line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/ # check key: value pair
         values += [line.dup]     # assume single value column (no need to escape commas)
       else
         if inside_record && blank_counter == 0   # continue adding more values
           values += find_values( line )
         else                                     # assume single-line (stand-alone / classic csv) record          
-          inside_record = false
           if values.length > 0
             attribs, more_values = find_key_n_title( values )
             attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
             yield( attribs, more_values )
-            blank_counter  = 0
             values         = []
           end
+          inside_record  = false
+          blank_counter  = 0
           values = find_values( line )
         end
       end
-      
+
     end # each lines
 
     # do NOT forget to yield last line (if present/processed)
@@ -187,40 +187,46 @@ class ValuesReader
   def find_values( line )
     ## note returns an array of values (strings)
 
-    ### guard escaped commas (e.g. \,)
-    ### todo: use single regex for processing escaped n unescaped commas ??
-    line = line.gsub( '\,', '♣' )  # use black club suit/=shamrock char for escaped separator
+    meta_comma     = '«KOMMA»'
+    meta_separator = '« »'
 
-    ## use generic separator (allow us to configure separator)
-    #  e.g ♦ &diams; &diamondsuit;
-    line = line.gsub( ',', '♦')
+    # guard escaped commas
+    #  e.g. convert \, to «KOMMA»
+    line = line.gsub( '\,', meta_comma )
 
-    ## restore escaped commas (before split)
-    line = line.gsub( '♣', ',' )
+    # note: use generic separator (allow us to configure separator)
+    #  e.g « »
+    line = line.gsub( ',', meta_separator )
 
-    logger.debug "line: »#{line}«"
+    # restore escaped commas (before split)
+    line = line.gsub( meta_comma, ',' )
 
-    values = line.split( '♦' )
-      
+    logger.debug "line: |»#{line}«|"
+
+    values = line.split( meta_separator )
+
     # pass 1) remove leading and trailing whitespace for values
 
     values = values.map { |value| value.strip }
 
-    ##### todo remove support of comment column? (NB: must NOT include commas)
+
+    ##### todo/fix:
+    #  !!!REMOVE!!!
+    # remove support of comment column? (NB: must NOT include commas)
     # pass 2) remove comment columns
     #
-    #  todo: check if still possible ?? - add an example here how it looks like/works
+    #  todo/fix: check if still possible ?? - add an example here how it looks like/works
 
     values = values.select do |value|
       if value =~ /^#/  ## start with # treat it as a comment column; e.g. remove it
-        logger.debug "   removing column with value »#{value}«"
+        logger.info "   removing column with value »#{value}«"
         false
       else
         true
       end
     end
 
-    logger.debug "  values: »#{values.join('« »')}«"
+    logger.debug "  values: |»#{values.join('« »')}«|"
     values
   end
 
