@@ -15,8 +15,7 @@ module TextUtils
      # e.g. Bock ‹Damm› becomes =>  Bock Damm
      #      ‹Estrella› ‹Damm› Inedit becomes =>  Estrella Damm Inedit
 
-     # todo: also allow reguluar <> for easy typing/input ??? why? why not? used for anything else already?
-     title.gsub( /[‹›]/, '' )
+     title.gsub( /[<>‹›]/, '' )
   end
 
   def strip_translations( title )
