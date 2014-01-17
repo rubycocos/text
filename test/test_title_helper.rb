@@ -8,6 +8,7 @@
 
 require 'helper'
 
+
 class TestTitleHelper < MiniTest::Unit::TestCase
 
   def test_title_to_key
@@ -15,7 +16,9 @@ class TestTitleHelper < MiniTest::Unit::TestCase
     txt_io = [
       [ 'São Paulo',   'saopaulo' ],
       [ 'São Gonçalo', 'saogoncalo' ],
-      [ 'Výčepní',     'vycepni' ]
+      [ 'Výčepní',     'vycepni' ],
+      [ 'Bock ‹Damm›', 'bockdamm' ],
+      [ '‹Estrella› ‹Damm› Inedit', 'estrelladamminedit' ]
     ] 
 
     txt_io.each do |txt|

@@ -10,13 +10,20 @@ module TextUtils
 #   lets us use "classic" web helpers a la rails
 #   find a good name for sub module -  Reader? Fixtures? Values? Parser? 
 
+  def strip_part_markers( title )   # use different name e.g. strip_name_markers/strip_name_enclosure etc.??
+     # remove optional part markers
+     # e.g. Bock ‹Damm› becomes =>  Bock Damm
+     #      ‹Estrella› ‹Damm› Inedit becomes =>  Estrella Damm Inedit
 
+     # todo: also allow reguluar <> for easy typing/input ??? why? why not? used for anything else already?
+     title.gsub( /[‹›]/, '' )
+  end
 
   def strip_translations( title )
       # remove optional english translation in square brackets ([])
       # e.g. Wien [Vienna]  =>  Wien
 
-      title.gsub( /\[.+\]/, '' )
+      title.gsub( /\[[^\]]+\]/, '' )
   end
 
   def strip_subtitles( title )
@@ -24,7 +31,7 @@ module TextUtils
       # e.g. Las Palmas (de Gran Canaria) => Las Palmas
       #      Palma (de Mallorca) => Palma
 
-      title.gsub( /\(.+\)/, '' )
+      title.gsub( /\([^\)]+\)/, '' )
   end
 
   def strip_tags( title )   # todo: use an alias or rename for better name ??
@@ -34,7 +41,7 @@ module TextUtils
       #
       # todo: use for autotags? e.g. {Bio} => bio 
       
-      title.gsub( /\{.+\}/, '' )
+      title.gsub( /\{[^\}]+\}/, '' )
   end
 
   def strip_whitespaces( title )
@@ -53,6 +60,8 @@ module TextUtils
 
       ## NB: downcase does NOT work for accented chars (thus, include in alternatives)
       key = title.downcase
+
+      key = strip_part_markers( key )  # e.g. ‹Estrella› ‹Damm› Inedit becomes =>  Estrella Damm Inedit
 
       key = strip_translations( key )
 

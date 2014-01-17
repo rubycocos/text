@@ -12,7 +12,7 @@ module TextUtils
   def match_country( value )
     if value =~ /^country:/       # country:
       country_key = value[8..-1]  # cut off country: prefix
-      country = WorldDb::Models::Country.find_by_key!( country_key )
+      country = WorldDb::Model::Country.find_by_key!( country_key )
       yield( country )
       true # bingo - match found
     else
@@ -23,7 +23,7 @@ module TextUtils
   def match_supra( value )
     if value =~ /^supra:/         # supra:
       country_key = value[6..-1]  # cut off supra: prefix
-      country = WorldDb::Models::Country.find_by_key!( country_key )
+      country = WorldDb::Model::Country.find_by_key!( country_key )
       yield( country )
       true # bingo - match found
     else
@@ -52,11 +52,11 @@ module TextUtils
   def match_region_for_country( value, country_id )  ## NB: required country_id 
     if value =~ /^region:/   ## region:
       region_key = value[7..-1]  ## cut off region: prefix
-      region = WorldDb::Models::Region.find_by_key_and_country_id!( region_key, country_id )
+      region = WorldDb::Model::Region.find_by_key_and_country_id!( region_key, country_id )
       yield( region )
       true  # bingo - match found
     elsif is_region?( value )  ## assume region code e.g. TX or N
-      region = WorldDb::Models::Region.find_by_key_and_country_id!( value.downcase, country_id )
+      region = WorldDb::Model::Region.find_by_key_and_country_id!( value.downcase, country_id )
       yield( region )
       true  # bingo - match found
     else
@@ -68,7 +68,7 @@ module TextUtils
   def match_city( value )  # NB: might be nil (city not found)
     if value =~ /^city:/   ## city:
       city_key = value[5..-1]  ## cut off city: prefix
-      city = WorldDb::Models::City.find_by_key( city_key )
+      city = WorldDb::Model::City.find_by_key( city_key )
       yield( city )  # NB: might be nil (city not found)
       true # bingo - match found
     else
@@ -80,7 +80,7 @@ module TextUtils
   def match_metro( value )
     if value =~ /^metro:/   ## metro:
       city_key = value[6..-1]  ## cut off metro: prefix
-      city = WorldDb::Models::City.find_by_key!( city_key )   # NB: parent city/metro required, that is, lookup w/ !
+      city = WorldDb::Model::City.find_by_key!( city_key )   # NB: parent city/metro required, that is, lookup w/ !
       yield( city )
       true # bingo - match found
     else
@@ -113,7 +113,7 @@ module TextUtils
   def match_brewery( value )
     if value =~ /^by:/   ## by:  -brewed by/brewery
       brewery_key = value[3..-1]  ## cut off by: prefix
-      brewery = BeerDb::Models::Brewery.find_by_key!( brewery_key )
+      brewery = BeerDb::Model::Brewery.find_by_key!( brewery_key )
       yield( brewery )
       true # bingo - match found
     else
@@ -287,6 +287,10 @@ module TextUtils
       logger.debug "   found grade #{grade} in title"
       attribs[:grade] = grade
     end
+
+    ## fix/todo: add find parts ??
+    #  e.g. ‹Estrella› ‹Damm› Inedit
+    #    becomes =>   title: 'Estrella Damm Inedit'  and  parts: ['Estrella','Damm']
 
     ## title (split of optional synonyms)
     # e.g. FC Bayern Muenchen|Bayern Muenchen|Bayern

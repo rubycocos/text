@@ -1,6 +1,6 @@
-History.markdown
+History.md
 Manifest.txt
-README.markdown
+README.md
 Rakefile
 lib/textutils.rb
 lib/textutils/classifier.rb

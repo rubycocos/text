@@ -14,8 +14,8 @@ Hoe.spec 'textutils' do
   self.email   = 'ruby-talk@ruby-lang.org'
 
   # switch extension to .markdown for gihub formatting
-  self.readme_file  = 'README.markdown'
-  self.history_file = 'History.markdown'
+  self.readme_file  = 'README.md'
+  self.history_file = 'History.md'
 
   self.extra_deps = [
     ['logutils', '~> 0.5']  # e.g. >= 0.5 <= 1.0

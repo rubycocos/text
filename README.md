@@ -1,10 +1,13 @@
-# `textutils` - Text Filters, Helpers, Readers and More in Ruby
+# `textutils`
+
+Text Filters, Helpers, Readers and More in Ruby
 
 * home  :: [github.com/rubylibs/textutils](https://github.com/rubylibs/textutils)
 * bugs  :: [github.com/rubylibs/textutils/issues](https://github.com/rubylibs/textutils/issues)
 * gem   :: [rubygems.org/gems/textutils](https://rubygems.org/gems/textutils)
 * rdoc  :: [rubydoc.info/gems/textutils](http://rubydoc.info/gems/textutils)
 * forum :: [ruby-talk@ruby-lang.org](www.ruby-lang.org/en/community/mailing-lists/)
+
 
 
 ## Filters
