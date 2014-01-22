@@ -24,7 +24,17 @@ class TestTitleHelper < MiniTest::Unit::TestCase
       [ '‹Hirter› Pils', 'hirterpils' ],
       [ '‹Villacher› Märzen', 'villachermaerzen' ],
       [ 'Bock <Damm>', 'bockdamm' ],
-      [ '<Estrella> <Damm> Inedit', 'estrelladamminedit' ]
+      [ '<Estrella> <Damm> Inedit', 'estrelladamminedit' ],
+      [ 'Żubr', 'zubr' ],
+      [ 'Żywiec', 'zywiec' ],
+      [ 'Lomża Export', 'lomzaexport' ],
+      [ 'Nogne Ø Imperial Stout', 'nogneoimperialstout' ],
+      [ 'Xyauyù', 'xyauyu' ],
+      [ 'Águila', 'aguila' ],
+      [ '+Lupulus', 'lupulus' ],
+      [ '+Malta', 'malta' ],
+      [ 'Minerva 8:60', 'minerva860' ],
+      [ 'Hop Crisis!', 'hopcrisis' ]
     ]
 
     txt_io.each do |txt|

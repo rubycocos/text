@@ -45,12 +45,14 @@ module TextUtils
 
   def strip_whitespaces( title )
       # remove all whitespace and punctuation
-      title.gsub( /[ \t_\-\.()\[\]'"\/]/, '' )
+      title.gsub( /[ \t_\-\.!()\[\]'"\/]/, '' )
   end
 
   def strip_special_chars( title )
       # remove special chars (e.g. %°&)
-      title.gsub( /[%&°]/, '' )
+      # e.g. +Malta
+      #      Minerva 8:60
+      title.gsub( /[%&°+:]/, '' )
   end
 
   def title_to_key( title )
@@ -118,24 +120,29 @@ module TextUtils
         ['ť', 't' ],  # e.g. Měšťan
         ['ü', 'ue'],
         ['ú', 'u' ],  # e.g. Fútbol
+        ['ù', 'u' ],  # e.g. Xyauyù (it)
         ['ū', 'u' ],  # e.g. Sūduva
         ['ů', 'u' ],  # e.g. Sládkův
         ['ı', 'u' ],  # e.g. Bakı   # use u?? (Baku) why-why not?
         ['ý', 'y' ],  # e.g. Nefitrovaný
         ['ź', 'z' ],  # e.g. Łódź
         ['ž', 'z' ],  # e.g. Domžale, Petržalka
+        ['ż', 'z' ],  # e.g. Lomża  (polish)
 
+        ['Á', 'a' ],  # e.g. Águila (es)
         ['Č', 'c' ],  # e.g. České
         ['İ', 'i' ],  # e.g. İnter
         ['Í', 'i' ],  # e.g. ÍBV
         ['Ł', 'l' ],  # e.g. Łódź
         ['Ö', 'oe' ], # e.g. Örebro
+        ['Ø', 'o' ],  # e.g. Nogne Ø Imperial Stout (no)
         ['Ř', 'r' ],  # e.g. Řezák
         ['Ś', 's' ],  # e.g. Śląsk
         ['Š', 's' ],  # e.g. MŠK
         ['Ş', 's' ],  # e.g. Şüvälan
         ['Ú', 'u' ],  # e.g. Ústí, Újpest
-        ['Ž', 'z' ]   # e.g. Žilina
+        ['Ž', 'z' ],   # e.g. Žilina
+        ['Ż', 'z' ]    # e.g. Żywiec (polish)
       ]
       
       alternatives.each do |alt|
@@ -186,6 +193,10 @@ module TextUtils
         ['ü', '(ü|ue)'],  ## e.g. 
         ['ú', '(ú|u)']  ## e.g. Fútbol
       ]
+      
+      ### fix/todo:  check for  dot+space e.g. . and make dot optional
+      ##    e.g. U. de. G. or U de G or U.de.G ??
+      ##   collect some more (real-world) examples first!!!!!
       
       alternatives.each do |alt|
         title = title.gsub( alt[0], alt[1] )
