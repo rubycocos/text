@@ -43,7 +43,7 @@ class ValuesReaderV2
     end
 
     ## fix: move Prop table to props gem - why? why not??
-    WorldDb::Models::Prop.create_from_fixture!( name, path )
+    WorldDb::Model::Prop.create_from_fixture!( name, path )
   end
 
 end # class ValuesReaderV2
@@ -59,7 +59,7 @@ class ValuesReader
 
   def initialize( path, more_attribs={} )
     @more_attribs = more_attribs
-
+    
     ### workaround/hack
     #  if path includes newline assume it's a string buffer not a file name
     #  fix: use  from_file an from_string etc. for  ctor
@@ -88,6 +88,16 @@ class ValuesReader
     inside_record  = false
     blank_counter  = 0    # count of number of blank lines (note: 1+ blank lines clear multi-line record)
     values         = []
+
+    # keep track of last header
+    #  e.g. lines like
+    # ___________________________________
+    # - Brauerei Schwechat (Brau Union)
+    #
+    #  laster_header will be 'Brauerei Schwechat (Brau Union)'
+    #  gets passed along as an attribue e.g. more_attribs[:header]='Brauerei Schwechat (Brau Union)'
+    last_header  = nil
+
 
     @data.each_line do |line|
 
@@ -126,8 +136,20 @@ class ValuesReader
       line = line.strip
 
 
-      if line =~ /^-\s/   # check for group headers  e.g.  - St. James Brewery
-        logger.info "  skip group header #{line} for now (fix/add soon)"
+      if line =~ /^-\s+/   # check for group headers  e.g.  - St. James Brewery
+        if values.length > 0  # check if we already processed a record? if yes; yield last record (before reset)
+          attribs, more_values = find_key_n_title( values )
+          attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
+          attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
+          yield( attribs, more_values )
+          values         = []
+        end
+        inside_record  = false
+        blank_counter  = 0
+
+        # update last_header
+        last_header = line.gsub( /^-\s/, '' )  # cut-off leading marker and space
+        logger.info "  update group header >#{last_header}<"
         next
       elsif line =~ /^\[([a-z][a-z]+)\]/
       ### check for multiline record
@@ -137,10 +159,10 @@ class ValuesReader
         if values.length > 0  # check if we already processed a record? if yes; yield last record (before reset)
           attribs, more_values = find_key_n_title( values )
           attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
+          attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
           yield( attribs, more_values )
           values         = []
         end
-
         inside_record  = true
         blank_counter  = 0
 
@@ -160,6 +182,7 @@ class ValuesReader
           if values.length > 0
             attribs, more_values = find_key_n_title( values )
             attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
+            attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
             yield( attribs, more_values )
             values         = []
           end
@@ -175,6 +198,7 @@ class ValuesReader
     if values.length > 0
       attribs, more_values = find_key_n_title( values )
       attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
+      attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
       yield( attribs, more_values )
     end
 

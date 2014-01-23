@@ -10,6 +10,63 @@ require 'helper'
 
 class TestValuesReader < MiniTest::Unit::TestCase
 
+  def test_header
+    txt =<<EOS
+
+Wieselburger Gold,      5.0%, 11.8°
+____________________________________________
+- Zwettler Brauerei|Privatbrauerei Zwettl
+
+Zwettler Original,     5.1 %,  11.9°
+Zwettler Export Lager, 5.0 %,  11.8°
+
+______________________________________
+- Brauerei Schwechat (Brau Union)
+
+Schwechater,             5.0%, 11.5°, 41.0 kcal/100ml
+Schwechater Zwickl,      5.4%, 12.5°, 45.0 kcal/100ml
+
+EOS
+
+    reader = ValuesReader.new( txt )
+
+    i = 0
+    reader.each_line do |attribs, values|
+      i += 1
+
+      puts "attribs:"
+      pp attribs
+      puts "values:"
+      pp values
+
+      if i == 1
+        assert_equal attribs[:header],    nil
+        assert_equal attribs[:key],      'wieselburgergold'
+        assert_equal attribs[:title],    'Wieselburger Gold'
+      elsif i == 2
+        assert_equal attribs[:header],   'Zwettler Brauerei|Privatbrauerei Zwettl'
+        assert_equal attribs[:key],      'zwettleroriginal'
+        assert_equal attribs[:title],    'Zwettler Original'
+      elsif i == 3
+        assert_equal attribs[:header],   'Zwettler Brauerei|Privatbrauerei Zwettl'
+        assert_equal attribs[:key],      'zwettlerexportlager'
+        assert_equal attribs[:title],    'Zwettler Export Lager'
+      elsif i == 4
+        assert_equal attribs[:header],   'Brauerei Schwechat (Brau Union)'
+        assert_equal attribs[:key],      'schwechater'
+        assert_equal attribs[:title],    'Schwechater'
+      elsif i == 5
+        assert_equal attribs[:header],   'Brauerei Schwechat (Brau Union)'
+        assert_equal attribs[:key],      'schwechaterzwickl'
+        assert_equal attribs[:title],    'Schwechater Zwickl'
+      else
+        assert false   # should not get here
+      end
+    end
+
+  end # test_header
+
+
   def test_escape_comma
     # note: double espace comma e.g. \\, becomes literal \,
     txt =<<EOS
@@ -52,7 +109,7 @@ EOS
         assert_equal values[0],  '1845'
         assert_equal values[1],  'The Griffin Brewery // Chiswick Lane South // London, W4 2QB'
       else
-        assert_equal true, false   # should not get here
+        assert false   # should not get here
       end
     end
   end # test_escape_comma
@@ -150,7 +207,7 @@ EOS
         assert_equal values[1],  'www.egger-bier.at'
         assert_equal values[2],  '3105 Unterradlberg // Tiroler Straße 18'
       else
-        assert_equal true, false   # should not get here
+        assert false   # should not get here
       end
     end
   end # test_mixed
@@ -212,7 +269,7 @@ EOS
         assert_equal values[2],  '3910 Zwettl // Syrnauer Straße 22-25'
         assert_equal values[3],  'brands: Zwettler'
       else
-        assert_equal true, false   # should not get here
+        assert false   # should not get here
       end
     end
   end  # test_multi_line_records
@@ -247,7 +304,7 @@ EOS
       elsif i == 2
       elsif i == 3
       else
-        assert_equal true, false   # should not get here
+        assert  false   # should not get here
       end
     end
   end  #  test_classic_csv_records
@@ -302,7 +359,7 @@ EOS
         assert_equal values[1], '11.8°'
         assert_equal values[-1], 'bio'
       else
-        assert_equal true, false   # should not get here
+        assert false   # should not get here
       end
     end
   end # test_autogen_keys
