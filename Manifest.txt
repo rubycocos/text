@@ -26,6 +26,7 @@ lib/textutils/sanitizier.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
 test/helper.rb
+test/test_address_helper.rb
 test/test_hypertext_helper.rb
 test/test_title_helper.rb
 test/test_unicode_helper.rb
