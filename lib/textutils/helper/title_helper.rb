@@ -49,10 +49,11 @@ module TextUtils
   end
 
   def strip_special_chars( title )
-      # remove special chars (e.g. %°&)
+      # remove special chars (e.g. %°&$)
       # e.g. +Malta
       #      Minerva 8:60
-      title.gsub( /[%&°+:]/, '' )
+      #      $Alianz$ Arena
+      title.gsub( /[%&°+:$]/, '' )
   end
 
   def title_to_key( title )
@@ -112,6 +113,7 @@ module TextUtils
         ['ő', 'o' ],  # e.g. Győri
         ['ó', 'o' ],  # e.g. Colón, Łódź, Kraków
         ['õ', 'o' ],  # e.g. Nõmme
+        ['ô', 'o' ],  # e.g. Amazônia (pt)
         ['ø', 'o' ],  # e.g. Fuglafjørdur, København
         ['ř', 'r' ],  # e.g. Třeboň
         ['ș', 's' ],  # e.g. Chișinău, București

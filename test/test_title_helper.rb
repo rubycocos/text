@@ -34,7 +34,9 @@ class TestTitleHelper < MiniTest::Unit::TestCase
       [ '+Lupulus', 'lupulus' ],
       [ '+Malta', 'malta' ],
       [ 'Minerva 8:60', 'minerva860' ],
-      [ 'Hop Crisis!', 'hopcrisis' ]
+      [ 'Hop Crisis!', 'hopcrisis' ],
+      [ '$Alianz$ Arena', 'alianzarena' ],
+      [ 'Arena Amazônia', 'arenaamazonia' ]
     ]
 
     txt_io.each do |txt|
