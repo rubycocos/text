@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 
 # core and stlibs
 
@@ -43,3 +45,25 @@ require 'textutils/reader/fixture_reader'
 
 require 'textutils/classifier'
 
+
+
+
+module TextUtils
+  # make helpers available as class methods e.g. TextUtils.convert_unicode_dashes_to_plain_ascii
+  extend UnicodeHelper
+  extend TitleHelper
+  extend AddressHelper
+
+  def self.banner
+    "textutils/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
+  end
+
+  def self.root
+    "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
+  end
+
+end
+
+
+
+puts TextUtils.banner   if $DEBUG    # say hello

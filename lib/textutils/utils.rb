@@ -1,16 +1,6 @@
 # encoding: utf-8
 
 
-
-module TextUtils
-  # make helpers available as class methods e.g. TextUtils.convert_unicode_dashes_to_plain_ascii
-  extend UnicodeHelper
-  extend TitleHelper
-  extend AddressHelper
-end
-
-
-
 class File
   def self.read_utf8( path )
     text = open( path, 'r:bom|utf-8' ) do |file|
@@ -33,7 +23,7 @@ end
 
 
 def find_data_path_from_gemfile_gitref( name )
-  puts "[debug] find_data_path( name='#{name}' )..."
+  puts "[textutils] find_data_path( name='#{name}' )..."
   puts "load path:"
   pp $LOAD_PATH
 
