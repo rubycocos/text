@@ -1,5 +1,13 @@
 # encoding: utf-8
 
+module TextUtils
+  # make helpers available as class methods e.g. TextUtils.convert_unicode_dashes_to_plain_ascii
+  extend UnicodeHelper
+  extend TitleHelper
+  extend AddressHelper
+end
+
+
 
 class File
   def self.read_utf8( path )

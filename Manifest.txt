@@ -16,6 +16,7 @@ lib/textutils/helper/title_helper.rb
 lib/textutils/helper/unicode_helper.rb
 lib/textutils/helper/value_helper.rb
 lib/textutils/helper/xml_helper.rb
+lib/textutils/page.rb
 lib/textutils/patterns.rb
 lib/textutils/reader/code_reader.rb
 lib/textutils/reader/fixture_reader.rb

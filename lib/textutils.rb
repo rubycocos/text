@@ -45,14 +45,11 @@ require 'textutils/reader/fixture_reader'
 
 require 'textutils/classifier'
 
+require 'textutils/page'   # for book pages and page templates
 
 
 
 module TextUtils
-  # make helpers available as class methods e.g. TextUtils.convert_unicode_dashes_to_plain_ascii
-  extend UnicodeHelper
-  extend TitleHelper
-  extend AddressHelper
 
   def self.banner
     "textutils/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
