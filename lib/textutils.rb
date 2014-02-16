@@ -44,6 +44,7 @@ require 'textutils/reader/values_reader'
 require 'textutils/reader/fixture_reader'
 
 require 'textutils/classifier'
+require 'textutils/title'    # title table/mapper/finder utils
 
 require 'textutils/page'   # for book pages and page templates
 
