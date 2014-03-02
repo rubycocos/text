@@ -30,6 +30,8 @@ lib/textutils/version.rb
 test/helper.rb
 test/test_address_helper.rb
 test/test_hypertext_helper.rb
+test/test_taglist.rb
+test/test_title_finder.rb
 test/test_title_helper.rb
 test/test_title_mapper.rb
 test/test_unicode_helper.rb

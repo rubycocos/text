@@ -161,8 +161,17 @@ module TextUtils
       #    . to \. and
       #    ( to \(
       #    ) to \)
-      #    ? to \? etc.
+      #    ? to \? -- zero or one
+      #    * to \* -- zero or more
+      #    + to \+ -- one or more
+      #    $ to \$ -- end of line
+      #    ^ to \^ -- start of line etc.
       
+      ### add { and } ???
+      ### add [ and ] ???
+      ### add \ too ???
+      ### add | too ???
+
       # e.g. Benfica Lis.
       # e.g. Club Atlético Colón (Santa Fe)
       # e.g. Bauer Anton (????)
@@ -173,6 +182,10 @@ module TextUtils
       title = title.gsub( '(', '\(' )
       title = title.gsub( ')', '\)' )
       title = title.gsub( '?', '\?' )
+      title = title.gsub( '*', '\*' )
+      title = title.gsub( '+', '\+' )
+      title = title.gsub( '$', '\$' )
+      title = title.gsub( '^', '\^' )
 
       ##  match accented char with or without accents
       ##  add (ü|ue) etc.

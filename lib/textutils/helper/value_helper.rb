@@ -45,7 +45,12 @@ module TextUtils
 
   def is_region?( value )
     # assume region code e.g. TX or N
-    value =~ /^[A-Z]{1,2}$/
+    #
+    # fix: allow three letter regions too e.g. BRU (brussels)
+    match_result =  value =~ /^[A-Z]{1,2}$/
+    # match found if 0,1,2,3 etc or no match if nil
+    # note: return bool e.g. false|true  (not 0,1,2,3 etc. and nil)
+    match_result != nil
   end
 
   ## fix/todo: use match_region_for_country! w/ !!! why? why not?
@@ -88,6 +93,8 @@ module TextUtils
     end
   end
 
+  ######
+  ## fix: move to worlddb?? why why not??
   def match_metro_flag( value )
     if value =~ /^metro$/   # metro(politan area)
       yield( true )
@@ -97,6 +104,8 @@ module TextUtils
     end
   end
 
+  ######
+  ## fix: move to worlddb?? why why not??
   def match_metro_pop( value )
     if value =~ /^m:/   # m:
       num = value[2..-1].gsub(/[ _]/, '').to_i   # cut off m: prefix; allow space and _ in number
@@ -109,7 +118,9 @@ module TextUtils
 
 
 
-
+  #####
+  ## fix: move to beerdb ??? why? why not??
+  
   def match_brewery( value )
     if value =~ /^by:/   ## by:  -brewed by/brewery
       brewery_key = value[3..-1]  ## cut off by: prefix
@@ -124,8 +135,12 @@ module TextUtils
 
   def is_year?( value )
     # founded/established year e.g. 1776
-    value =~ /^[0-9]{4}$/
+    match_result =  value =~ /^[0-9]{4}$/
+    # match found if 0,1,2,3 etc or no match if nil
+    # note: return bool e.g. false|true  (not 0,1,2,3 etc. and nil)
+    match_result != nil
   end
+
 
   def match_year( value )
     if is_year?( value )  # founded/established year e.g. 1776
@@ -206,7 +221,10 @@ module TextUtils
     #  - must end w/   .com
     #
     # fix: support more url format (e.g. w/o www. - look for .com .country code etc.)
-    value =~ /^www\.|\.com$/
+    match_result =  value =~ /^www\.|\.com$/
+    # match found if 0,1,2,3 etc or no match if nil
+    # note: return bool e.g. false|true  (not 0,1,2,3 etc. and nil)
+    match_result != nil
   end
 
   def match_website( value )
@@ -223,18 +241,45 @@ module TextUtils
 
   def is_address?( value )
     # if value includes // assume address e.g. 3970 Weitra // Sparkasseplatz 160
-    value =~ /\/{2}/
+    match_result =  value =~ /\/{2}/
+    # match found if 0,1,2,3 etc or no match if nil
+    # note: return bool e.g. false|true  (not 0,1,2,3 etc. and nil)
+    match_result != nil
   end
 
   def is_taglist?( value )
-    value =~ /^[a-z0-9\|_ ]+$/
+    ### note: cannot start w/ number must be letter for now
+    ##  -- in the future allow free standing years (e.g. 1980 etc.?? why? why not?)
+    ##  e.g. not allowed  14 ha or 5_000 hl etc.
+    match_result =  value =~ /^([a-z][a-z0-9\|_ ]*[a-z0-9]|[a-z])$/
+    # match found if 0,1,2,3 etc or no match if nil
+    # note: return bool e.g. false|true  (not 0,1,2,3 etc. and nil)
+    match_result != nil
   end
 
 
   def find_grade( value )  # NB: returns ary [grade,value] / two values
     grade = 4  # defaults to grade 4  e.g  *** => 1, ** => 2, * => 3, -/- => 4
 
-    value = value.sub( /\s+(\*{1,3})\s*$/ ) do |_|  # NB: stars must end field/value
+    # NB: stars must end field/value or start field/value
+    #  e.g.
+    #  *** Anton Bauer   or
+    #  Anton Bauer ***
+
+    value = value.sub( /^\s*(\*{1,3})\s+/ ) do |_|
+      if $1 == '***'
+        grade = 1
+      elsif $1 == '**'
+        grade = 2
+      elsif $1 == '*'
+        grade = 3
+      else
+        # unknown grade; not possible, is'it?
+      end
+      ''  # remove * from title if found
+    end
+
+    value = value.sub( /\s+(\*{1,3})\s*$/ ) do |_|
       if $1 == '***'
         grade = 1
       elsif $1 == '**'
@@ -267,7 +312,9 @@ module TextUtils
 
     # fix/todo: add support for leading underscore _
     #   or allow keys starting w/ digits?
-    if values[0] =~ /^([a-z][a-z0-9.]*[a-z0-9]|[a-z])$/    # NB: key must start w/ a-z letter (NB: minimum one letter possible)
+    
+    # NB: key must start w/ a-z letter (NB: minimum one letter possible)
+    if values[0] =~ /^([a-z][a-z0-9.]*[a-z0-9]|[a-z])$/
       key_col         = values[0]
       title_col       = values[1]
       more_values     = values[2..-1]
