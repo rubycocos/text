@@ -157,15 +157,22 @@ module TextUtils
 
   def title_esc_regex( title_unescaped )
       
-      ##  escape regex special chars e.g. . to \. and ( to \( etc.
+      ##  escape regex special chars e.g.
+      #    . to \. and
+      #    ( to \(
+      #    ) to \)
+      #    ? to \? etc.
+      
       # e.g. Benfica Lis.
       # e.g. Club Atlético Colón (Santa Fe)
+      # e.g. Bauer Anton (????)
 
       ## NB: cannot use Regexp.escape! will escape space '' to '\ '
       ## title = Regexp.escape( title_unescaped )
       title = title_unescaped.gsub( '.', '\.' )
       title = title.gsub( '(', '\(' )
       title = title.gsub( ')', '\)' )
+      title = title.gsub( '?', '\?' )
 
       ##  match accented char with or without accents
       ##  add (ü|ue) etc.
