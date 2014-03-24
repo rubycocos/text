@@ -12,6 +12,11 @@ require 'erb'
 
 # 3rd party gems / libs
 
+# fix: remove version from activerecord in deps
+require 'active_support/all'   # String.starts_with?, Object.blank?, etc.
+
+require 'props'
+require 'props/db'   ## for Prop model --> move create_from fixtures to textutils!!
 require 'logutils'
 
 # our own code
@@ -39,6 +44,7 @@ require 'textutils/helper/value_helper'
 require 'textutils/utils'
 require 'textutils/reader/code_reader'
 require 'textutils/reader/hash_reader'
+require 'textutils/reader/hash_reader_v2'
 require 'textutils/reader/line_reader'
 require 'textutils/reader/values_reader'
 require 'textutils/reader/fixture_reader'

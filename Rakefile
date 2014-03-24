@@ -15,10 +15,13 @@ Hoe.spec 'textutils' do
 
   # switch extension to .markdown for gihub formatting
   self.readme_file  = 'README.md'
-  self.history_file = 'History.md'
+  self.history_file = 'HISTORY.md'
 
   self.extra_deps = [
-    ['logutils', '~> 0.5']  # e.g. >= 0.5 <= 1.0
+    ['props'],
+    ['logutils', '~> 0.5'],  # e.g. >= 0.5 <= 1.0
+    ### 3rd party gems
+    ['activesupport']
   ]
 
   self.licenses = ['Public Domain']
@@ -26,6 +29,5 @@ Hoe.spec 'textutils' do
   self.spec_extras = {
    :required_ruby_version => '>= 1.9.2'
   }
-  
 
 end
