@@ -42,6 +42,9 @@ require 'textutils/helper/address_helper'
 require 'textutils/helper/value_helper'
 
 require 'textutils/utils'
+require 'textutils/core_ext/file'
+require 'textutils/core_ext/time'
+
 require 'textutils/reader/code_reader'
 require 'textutils/reader/hash_reader'
 require 'textutils/reader/hash_reader_v2'
