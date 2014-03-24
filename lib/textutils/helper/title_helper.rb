@@ -106,6 +106,7 @@ module TextUtils
         ['ğ', 'g' ],  # e.g. Qarabağ
         ['ì', 'i' ],  # e.g. Potosì
         ['í', 'i' ],  # e.g. Ústí
+        ['ï', 'i' ],  # e.g. El Djazaïr
         ['ł', 'l' ],  # e.g. Wisła, Wrocław
         ['ñ', 'n' ],  # e.g. Porteño
         ['ň', 'n' ],  # e.g. Plzeň, Třeboň
@@ -114,6 +115,7 @@ module TextUtils
         ['ó', 'o' ],  # e.g. Colón, Łódź, Kraków
         ['õ', 'o' ],  # e.g. Nõmme
         ['ô', 'o' ],  # e.g. Amazônia (pt)
+        ['ō', 'o' ],  # e.g. Tōkyō
         ['ø', 'o' ],  # e.g. Fuglafjørdur, København
         ['ř', 'r' ],  # e.g. Třeboň
         ['ș', 's' ],  # e.g. Chișinău, București
@@ -199,27 +201,34 @@ module TextUtils
       alternatives = [
         ['-', '(-| )'],  ## e.g. Blau-Weiß Linz
         ['æ', '(æ|ae)'],  ## e.g. 
+        ['ä', '(ä|ae)'],  ## e.g. 
+        ['Ö', '(Ö|Oe)'],  ## e.g. Österreich
+        ['ö', '(ö|oe)'],  ## e.g. Mönchengladbach
+        ['ß', '(ß|ss)'],  ## e.g. Blau-Weiß Linz
+        ['ü', '(ü|ue)'],  ## e.g. 
+
         ['á', '(á|a)'],  ## e.g. Bogotá, Sársfield
         ['ã', '(ã|a)'],  ## e.g  São Paulo
-        ['ä', '(ä|ae)'],  ## e.g. 
         ['ç', '(ç|c)'],  ## e.g. Fenerbahçe
         ['é', '(é|e)'],  ## e.g. Vélez
         ['ê', '(ê|e)'],  ## e.g. Grêmio
+        ['ï', '(ï|i)' ], ## e.g. El Djazaïr
         ['ñ', '(ñ|n)'],  ## e.g. Porteño
         ['ň', '(ň|n)'],  ## e.g. Plzeň
-        ['Ö', '(Ö|Oe)'], ## e.g. Österreich
-        ['ö', '(ö|oe)'],  ## e.g. Mönchengladbach
         ['ó', '(ó|o)'],   ## e.g. Colón
+        ['ō', '(ō|o)'],  # # e.g. Tōkyō
         ['ș', '(ș|s)'],   ## e.g. Bucarești
-        ['ß', '(ß|ss)'],  ## e.g. Blau-Weiß Linz
-        ['ü', '(ü|ue)'],  ## e.g. 
         ['ú', '(ú|u)']  ## e.g. Fútbol
       ]
-      
+
       ### fix/todo:  check for  dot+space e.g. . and make dot optional
-      ##    e.g. U. de. G. or U de G or U.de.G ??
+      ##
+      #  e.g. make  dot (.) optional plus allow alternative optional space e.g.
+      #   -- for U.S.A. => allow USA or U S A
+      #
+      ##    e.g. U. de G. or U de G or U.de G. ??
       ##   collect some more (real-world) examples first!!!!!
-      
+
       alternatives.each do |alt|
         title = title.gsub( alt[0], alt[1] )
       end

@@ -23,7 +23,9 @@ lib/textutils/reader/fixture_reader.rb
 lib/textutils/reader/hash_reader.rb
 lib/textutils/reader/hash_reader_v2.rb
 lib/textutils/reader/line_reader.rb
+lib/textutils/reader/line_reader_v2.rb
 lib/textutils/reader/values_reader.rb
+lib/textutils/reader/values_reader_v2.rb
 lib/textutils/sanitizier.rb
 lib/textutils/title.rb
 lib/textutils/utils.rb
