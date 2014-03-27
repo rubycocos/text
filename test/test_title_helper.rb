@@ -1,11 +1,5 @@
 # encoding: utf-8
 
-###
-#  to run use
-#     ruby -I ./lib -I ./test test/test_helper.rb
-#  or better
-#     rake test
-
 require 'helper'
 
 

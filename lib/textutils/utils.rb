@@ -5,6 +5,8 @@ module TextUtils
   extend UnicodeHelper
   extend TitleHelper
   extend AddressHelper
+  
+  extend StringFilter # adds asciify and slugify
 end
 
 

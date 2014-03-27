@@ -10,6 +10,7 @@ lib/textutils/filter/code_filter.rb
 lib/textutils/filter/comment_filter.rb
 lib/textutils/filter/erb_django_filter.rb
 lib/textutils/filter/erb_filter.rb
+lib/textutils/filter/string_filter.rb
 lib/textutils/helper/address_helper.rb
 lib/textutils/helper/date_helper.rb
 lib/textutils/helper/hypertext_helper.rb
@@ -34,6 +35,7 @@ lib/textutils/utils.rb
 lib/textutils/version.rb
 test/helper.rb
 test/test_address_helper.rb
+test/test_asciify.rb
 test/test_hypertext_helper.rb
 test/test_taglist.rb
 test/test_title_finder.rb

@@ -30,6 +30,7 @@ require 'textutils/filter/code_filter'
 require 'textutils/filter/comment_filter'
 require 'textutils/filter/erb_django_filter'
 require 'textutils/filter/erb_filter'
+require 'textutils/filter/string_filter'
 
 require 'textutils/helper/date_helper'
 require 'textutils/helper/hypertext_helper'
