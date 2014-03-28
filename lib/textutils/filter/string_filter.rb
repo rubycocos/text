@@ -9,16 +9,13 @@ module TextUtils
       ## todo: add some more
       ## see http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references  for more
       
-      ## todo: add unicode codepoint name
-      
-      ##
-      ## fix: do not auto-map to lover case??? why? why not??
+      ## todo: add unicode codepoint name ???
 
     ASCIIFY_MAPPINGS = [
-        ['ß', 'ss'],
+        ['ß', 'ss'],  # -- Latin small letter sharp s (ess-zed); see German Eszett // &szlig
 
-        ['æ', 'ae'],
-        ['ä', 'ae'],
+        ['æ', 'ae'],  # -- Latin small letter ae (Latin small ligature ae) // &aelig
+        ['ä', 'ae'],  # -- Latin small letter a with diaeresis // &auml
         ['ā', 'a' ],  # e.g. Liepājas, Kāṭhmāḍaũ
         ['á', 'a' ],  # e.g. Bogotá, Králové
         ['à', 'a' ],  # e.g. Thành Phố Hồ Chí Minh [Saigon]
@@ -93,30 +90,34 @@ module TextUtils
         ['ž', 'z' ],  # e.g. Domžale, Petržalka
         ['ż', 'z' ],  # e.g. Lomża  (polish)
 
-        ['Á', 'a' ],  # e.g. Águila (es)
-        ['Č', 'c' ],  # e.g. České
+        ['Æ', 'Ae' ], # -- Latin capital letter AE
+        ['Á', 'A' ],  # e.g. Águila (es)
+        ['Å', 'A' ],  # e.g. Åland Islands -- Latin capital letter A with ring above // &Aring;
 
-        ['Ḥ', 'h' ],  # e.g. Ḥalab [Aleppo]
-        ['Ḫ', 'h' ],  # e.g. Ḫamīs Mušayṭ
-        ['İ', 'i' ],  # e.g. İnter
-        ['Í', 'i' ],  # e.g. ÍBV
-        ['Ł', 'l' ],  # e.g. Łódź
+        ['Ç', 'C' ],  # --  Latin capital letter C with cedilla -- &Ccedil
+        ['Č', 'C' ],  # e.g. České
 
-        ['Ö', 'oe' ], # e.g. Örebro
-        ['Ō', 'o' ],  # e.g. Ōsaka [Osaka]
-        ['Ø', 'o' ],  # e.g. Nogne Ø Imperial Stout (no)
+        ['Ḥ', 'H' ],  # e.g. Ḥalab [Aleppo]
+        ['Ḫ', 'H' ],  # e.g. Ḫamīs Mušayṭ
+        ['İ', 'I' ],  # e.g. İnter
+        ['Í', 'I' ],  # e.g. ÍBV
+        ['Ł', 'L' ],  # e.g. Łódź
 
-        ['Ř', 'r' ],  # e.g. Řezák
+        ['Ö', 'Oe' ], # e.g. Örebro -- Latin capital letter O with diaeresis // &Ouml;
+        ['Ō', 'O' ],  # e.g. Ōsaka [Osaka] -- 
+        ['Ø', 'O' ],  # e.g. Nogne Ø Imperial Stout (no) -- Latin capital letter O with stroke (Latin capital letter O slash) // &Oslash
 
-        ['Ś', 's' ],  # e.g. Śląsk
-        ['Š', 's' ],  # e.g. MŠK
-        ['Ş', 's' ],  # e.g. Şüvälan
-        ['Ṣ', 's' ],  # e.g. Ṣan'ā' [Sana'a]
+        ['Ř', 'R' ],  # e.g. Řezák
 
-        ['Ṭ', 't' ],  # e.g. Ṭarābulus [Tripoli]
-        ['Ú', 'u' ],  # e.g. Ústí, Újpest
-        ['Ž', 'z' ],   # e.g. Žilina
-        ['Ż', 'z' ]    # e.g. Żywiec (polish)
+        ['Ś', 'S' ],  # e.g. Śląsk
+        ['Š', 'S' ],  # e.g. MŠK   -- Latin capital letter S with caron // &Scaron;
+        ['Ş', 'S' ],  # e.g. Şüvälan
+        ['Ṣ', 'S' ],  # e.g. Ṣan'ā' [Sana'a]
+
+        ['Ṭ', 'T' ],  # e.g. Ṭarābulus [Tripoli]
+        ['Ú', 'U' ],  # e.g. Ústí, Újpest
+        ['Ž', 'Z' ],   # e.g. Žilina
+        ['Ż', 'Z' ]    # e.g. Żywiec (polish) -- Latin captial letter Z with caron
       ]
 
 
@@ -131,7 +132,7 @@ module TextUtils
 
   def slugify( content, options={} )
     # 1) asciify
-    content = asciify( content )
+    content = asciify( content ).downcase
 
     # 2) replace space () with dash (-)
     content = content.gsub( ' ', '-' )

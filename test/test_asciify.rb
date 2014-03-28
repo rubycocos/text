@@ -9,30 +9,32 @@ class TestAsciify < MiniTest::Unit::TestCase
   def test_asciify
 
     txt_io = [
-      [ 'São Paulo',   'sao paulo' ],
-      [ 'São Gonçalo', 'sao goncalo' ],
-      [ 'Výčepní',     'vycepni' ],
-      [ 'Żubr', 'zubr' ],
-      [ 'Żywiec', 'zywiec' ],
-      [ 'Lomża Export', 'lomza export' ],
-      [ 'Nogne Ø Imperial Stout', 'nogne o imperial stout' ],
-      [ 'Xyauyù', 'xyauyu' ],
-      [ 'Águila', 'aguila' ],
-      [ 'Arena Amazônia', 'arena amazonia' ],
-      [ 'Tōkyō', 'tokyo' ],
-      [ 'Ōsaka', 'osaka' ],
-      [ 'El Djazaïr', 'el djazair' ],
-      [ 'Al-Kharṭūm', 'al-khartum' ],
-      [ 'Ṭarābulus', 'tarabulus' ],
-      [ 'Al-Iskandarīyah', 'al-iskandariyah' ],
-      [ 'Pex̌awar', 'pexawar'],
-      [ 'Pishōr', 'pishor' ],
-      [ 'Pishāwar', 'pishawar' ],
-      [ 'Islām ābād', 'islam abad' ],
-      [ 'Thành Phố Hồ Chí Minh', 'thanh pho ho chi minh' ]]
+      [ 'São Paulo',   'Sao Paulo' ],
+      [ 'São Gonçalo', 'Sao Goncalo' ],
+      [ 'Výčepní',     'Vycepni' ],
+      [ 'Żubr', 'Zubr' ],
+      [ 'Żywiec', 'Zywiec' ],
+      [ 'Lomża Export', 'Lomza Export' ],
+      [ 'Nogne Ø Imperial Stout', 'Nogne O Imperial Stout' ],
+      [ 'Xyauyù', 'Xyauyu' ],
+      [ 'Águila', 'Aguila' ],
+      [ 'Arena Amazônia', 'Arena Amazonia' ],
+      [ 'Tōkyō', 'Tokyo' ],
+      [ 'Ōsaka', 'Osaka' ],
+      [ 'El Djazaïr', 'El Djazair' ],
+      [ 'Al-Kharṭūm', 'Al-Khartum' ],
+      [ 'Ṭarābulus', 'Tarabulus' ],
+      [ 'Al-Iskandarīyah', 'Al-Iskandariyah' ],
+      [ 'Pex̌awar', 'Pexawar'],
+      [ 'Pishōr', 'Pishor' ],
+      [ 'Pishāwar', 'Pishawar' ],
+      [ 'Islām ābād', 'Islam abad' ],
+      [ 'Thành Phố Hồ Chí Minh', 'Thanh Pho Ho Chi Minh' ],
+      [ 'Åland Islands', 'Aland Islands' ]
+    ]
 
     txt_io.each do |txt|
-      assert_equal txt[1], TextUtils.asciify( txt[0] ).downcase
+      assert_equal txt[1], TextUtils.asciify( txt[0] )
     end
   end # method test_asciify
 

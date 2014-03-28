@@ -1,6 +1,12 @@
 # encoding: utf-8
 
 
+###
+#
+# fix: move to filter!!!!
+#   follows   fn( content ) pattern!!!
+
+
 module TextUtils
   module TitleHelper
 
@@ -75,7 +81,7 @@ module TextUtils
 
       key = strip_special_chars( key )
 
-      key = TextUtils.asciify( key )  ## see filter/string_filter
+      key = TextUtils.asciify( key ).downcase  ## see filter/string_filter
 
       key
   end # method title_to_key
