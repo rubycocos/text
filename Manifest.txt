@@ -20,6 +20,7 @@ lib/textutils/helper/unicode_helper.rb
 lib/textutils/helper/value_helper.rb
 lib/textutils/helper/xml_helper.rb
 lib/textutils/page.rb
+lib/textutils/parser/name_parser.rb
 lib/textutils/patterns.rb
 lib/textutils/reader/code_reader.rb
 lib/textutils/reader/fixture_reader.rb
@@ -37,6 +38,7 @@ test/helper.rb
 test/test_address_helper.rb
 test/test_asciify.rb
 test/test_hypertext_helper.rb
+test/test_slugify.rb
 test/test_taglist.rb
 test/test_title_finder.rb
 test/test_title_helper.rb

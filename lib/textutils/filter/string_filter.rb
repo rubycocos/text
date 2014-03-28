@@ -9,6 +9,9 @@ module TextUtils
       ## todo: add some more
       ## see http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references  for more
       
+      ## see  http://en.wikipedia.org/wiki/Latin_characters_in_Unicode !!! -- add more chars for conversion
+      ##      http://en.wikipedia.org/wiki/List_of_Latin_letters
+      
       ## todo: add unicode codepoint name ???
 
     ASCIIFY_MAPPINGS = [
@@ -131,12 +134,30 @@ module TextUtils
   end
 
   def slugify( content, options={} )
-    # 1) asciify
+    
+    ## NOTE: for now we do NOT strip non-word characters!!!!
+    ##   if it is an accented char, add it to asciify first!!!
+
+    ## converts to lowercase,
+    ##  removes non-word characters (alphanumerics and underscores)
+    ##  and converts spaces to hyphens.
+    ##  Also strips leading and trailing whitespace.
+
+    # 1) asciify and downcase
     content = asciify( content ).downcase
 
-    # 2) replace space () with dash (-)
+    # 2) replace special chars w/space e.g $&%?!§#=*+._/()[]{}
+    ##  --  check in [] do we need to espcae / () [] {}
+    content = content.gsub( /[$&%?!§#=*+._\/\(\)\[\]\{\}]/, ' ' )  ## -- replace w/ dash (-)
+    content = content.gsub( /["']/, '' )  ## -- remove (use replace too? why? why not? add others???
+
+    # 3) strip leading and trailing spaces; squeeze spaces (e.g. more than one into one space)
+    content = content.strip
+    content = content.gsub( / {2,}/, ' ' )
+
+    # 4) replace remaining (inner) spaces ( ) with dash (-)
     content = content.gsub( ' ', '-' )
-    content    
+    content
   end
 
 
