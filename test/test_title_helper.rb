@@ -37,7 +37,6 @@ class TestTitleHelper < MiniTest::Unit::TestCase
       [ 'Al-Kharṭūm [Khartoum]', 'alkhartum' ],
       [ 'Ṭarābulus [Tripoli]', 'tarabulus' ],
       [ 'Al-Iskandarīyah [Alexandria]', 'aliskandariyah' ],
-      [ 'Pex̌awar', 'pexawar'],
       [ 'Pishōr', 'pishor' ],
       [ 'Pishāwar', 'pishawar' ],
       [ 'Islām ābād', 'islamabad' ],
@@ -62,7 +61,8 @@ class TestTitleHelper < MiniTest::Unit::TestCase
       [ 'Ḫamīs Mušayṭ', 'hamismusayt'],
       [ "Ṣan'ā' [Sana'a]", 'sana'],
       [ "P'yŏngyang [Pyongyang]", 'pyongyang' ],
-      [ 'Kāṭhmāḍaũ [Kathmandu]', 'kathmadau' ]
+      [ 'Kāṭhmāḍaũ [Kathmandu]', 'kathmadau' ],
+      [ "Pe\u{030C}awar", 'pexawar']  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
     ]
 
     txt_io.each do |txt|

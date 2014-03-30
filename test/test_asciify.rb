@@ -25,12 +25,17 @@ class TestAsciify < MiniTest::Unit::TestCase
       [ 'Al-Kharṭūm', 'Al-Khartum' ],
       [ 'Ṭarābulus', 'Tarabulus' ],
       [ 'Al-Iskandarīyah', 'Al-Iskandariyah' ],
-      [ 'Pex̌awar', 'Pexawar'],
       [ 'Pishōr', 'Pishor' ],
       [ 'Pishāwar', 'Pishawar' ],
       [ 'Islām ābād', 'Islam abad' ],
       [ 'Thành Phố Hồ Chí Minh', 'Thanh Pho Ho Chi Minh' ],
-      [ 'Åland Islands', 'Aland Islands' ]
+      [ 'Åland Islands', 'Aland Islands' ],
+      [ 'Bistrița', 'Bistrita' ],
+      [ 'Piatra-Neamț', 'Piatra-Neamt' ],
+      [ 'Constanța', 'Constanta' ],
+      [ 'Galați', 'Galati' ],
+      [ 'Reșița', 'Resita' ],
+      [ "Pe\u{030C}awar", 'Pexawar']  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
     ]
 
     txt_io.each do |txt|

@@ -23,12 +23,12 @@ class TestSlugify < MiniTest::Unit::TestCase
       [ 'Al-Kharṭūm', 'al-khartum' ],
       [ 'Ṭarābulus', 'tarabulus' ],
       [ 'Al-Iskandarīyah', 'al-iskandariyah' ],
-      [ 'Pex̌awar', 'pexawar'],
       [ 'Pishōr', 'pishor' ],
       [ 'Pishāwar', 'pishawar' ],
       [ 'Islām ābād', 'islam-abad' ],
       [ 'Thành Phố Hồ Chí Minh', 'thanh-pho-ho-chi-minh' ],
-      [ 'Åland Islands', 'aland-islands' ]
+      [ 'Åland Islands', 'aland-islands' ],
+      [ "Pe\u{030C}awar", 'pexawar']  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
     ]
 
     txt_io.each do |txt|
