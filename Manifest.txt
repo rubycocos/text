@@ -34,9 +34,11 @@ lib/textutils/sanitizier.rb
 lib/textutils/title.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
+test/cl_all.txt
 test/helper.rb
 test/test_address_helper.rb
 test/test_asciify.rb
+test/test_fixture_reader.rb
 test/test_hypertext_helper.rb
 test/test_slugify.rb
 test/test_taglist.rb
