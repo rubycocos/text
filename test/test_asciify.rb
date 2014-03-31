@@ -35,6 +35,7 @@ class TestAsciify < MiniTest::Unit::TestCase
       [ 'Constanța', 'Constanta' ],
       [ 'Galați', 'Galati' ],
       [ 'Reșița', 'Resita' ],
+      [ 'Chișinău', 'Chisinau' ],
       [ "Pe\u{030C}awar", 'Pexawar']  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
     ]
 

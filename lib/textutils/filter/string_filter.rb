@@ -27,6 +27,7 @@ module TextUtils
         'â' => 'a',  # e.g  Goiânia
         'å' => 'a',  # e.g. Vålerenga
         'ą' => 'a',  # e.g. Śląsk
+        'ă' => 'a',  # e.g. Chișinău
 
         'ç' => 'c',  # e.g. São Gonçalo, Iguaçu, Neftçi
         'ć' => 'c',  # e.g. Budućnost
