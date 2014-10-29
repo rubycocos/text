@@ -21,7 +21,8 @@ require 'logutils'
 
 # our own code
 
-require 'textutils/version'
+require 'textutils/version'      ## let version always go first
+
 
 require 'textutils/patterns'   # regex patterns for reuse
 require 'textutils/sanitizier'
@@ -62,19 +63,6 @@ require 'textutils/title'    # title table/mapper/finder utils
 
 require 'textutils/page'   # for book pages and page templates
 
-
-
-module TextUtils
-
-  def self.banner
-    "textutils/#{VERSION} on Ruby #{RUBY_VERSION} (#{RUBY_RELEASE_DATE}) [#{RUBY_PLATFORM}]"
-  end
-
-  def self.root
-    "#{File.expand_path( File.dirname(File.dirname(__FILE__)) )}"
-  end
-
-end
 
 
 

@@ -1,3 +1,10 @@
+# encoding: utf-8
+
+
+#######################################################
+############# work in progress  #######################
+#
+#  NOTE: do NOT include for now in packaged gem
 
 
 ####

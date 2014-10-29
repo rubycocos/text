@@ -1,8 +1,14 @@
 # encoding: utf-8
 
 
+#######################################################
+############# work in progress  #######################
+#
+#  NOTE: do NOT include for now in packaged gem
+
 #######
 ## read data records "encoded" in markdown / plain text
+###
 
 class MarkdownReader
 

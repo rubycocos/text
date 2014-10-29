@@ -12,6 +12,11 @@ require 'minitest/autorun'
 # note: just activesupport or active_support will NOT work
 # require 'active_support/all'  # -- now included in textutils itself
 
+
+### note: do avoid version conflict require prop n prop/db first
+require 'props'
+require 'props/db'
+
 ## our own code
 
 require 'textutils'

@@ -59,7 +59,8 @@ class ValuesReader
       ##      % comment
       ##  why?  # might get used by markdown for marking headers, for example
 
-      ## NB: for now alternative comment lines not allowed as end of line style e.g
+
+      ## NOTE: for now alternative comment lines not allowed as end of line style e.g
       ##  some data, more data   -- comment here
 
       if line =~ /^\s*#/  ||
@@ -77,6 +78,14 @@ class ValuesReader
         logger.debug "skipping blank line (#{blank_counter})"
         next
       end
+
+      ### NOTE: skip sections lines (marked w/ at least ==) for now
+      ###  e.g.  === Waldviertel ===
+      if line =~ /^\s*={2,}\s+/
+        logger.debug "skipping section line |»#{line}«|"
+        next
+      end
+
 
       # pass 1) remove possible trailing eol comment
       ##  e.g    -> nyc, New York   # Sample EOL Comment Here (with or without commas,,,,)

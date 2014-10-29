@@ -2,7 +2,7 @@ require 'hoe'
 require './lib/textutils/version.rb'
 
 Hoe.spec 'textutils' do
-  
+
   self.version = TextUtils::VERSION
   
   self.summary = 'textutils - Text Filters, Helpers, Readers and More'
@@ -19,7 +19,7 @@ Hoe.spec 'textutils' do
 
   self.extra_deps = [
     ['props'],
-    ['logutils', '~> 0.5'],  # e.g. >= 0.5 <= 1.0
+    ['logutils'],
     ### 3rd party gems
     ['activesupport']
   ]
