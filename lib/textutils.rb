@@ -12,6 +12,9 @@ require 'erb'
 
 # 3rd party gems / libs
 
+require 'zip'
+
+
 # fix: remove version from activerecord in deps
 require 'active_support/all'   # String.starts_with?, Object.blank?, etc.
 

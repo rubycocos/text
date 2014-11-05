@@ -6,28 +6,55 @@
 
 ##
 #  use ManifestReader ?? why? why not?  - reuse in manifest gem (or manman e.g. manifest manger) ??
-#    
+#
 
 class FixtureReader
 
   include LogUtils::Logging
 
-  def initialize( path )
-    @path = path
-  
+
+  def self.from_zip( zip_file, name )
+
+    ## fix: check if name ends in .txt ?? if not add .txt
+    ##  change name to path ?? e.g. make it required to pass in full entry path??
+    ### fix -fix -fix => change name to path
+
+    path = name.end_with?('.txt') ? name : "#{name}.txt"
+
+    ## get text content from zip
+    text = zip_file.read( path )
+    self.from_string( text )
+  end
+
+  def self.from_file( path )
+    ## note: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
+    ## - see textutils/utils.rb
+    text = File.read_utf8( path )
+    self.from_string( text )
+  end
+
+  def self.from_string( text )
+    FixtureReader.new( { text: text } )
+  end
+
+
+  def initialize( arg )
+
+    if arg.is_a?( String )  ## old style (deprecated) - pass in filepath as string
+      path = arg
+      logger.info "FixtureReader.new - deprecated API - use FixtureReader.from_file() instead"
+      text = File.read_utf8( path )
+    else   ## assume it's a hash
+      opts = arg
+      text = opts[:text]
+    end
+
     @ary = []
 
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
     ## - see textutils/utils.rb
-    text = File.read_utf8( @path )
   
-    if @path.ends_with?( '.yml' ) || @path.ends_with?( '.yaml' )
-      ### fix/todo: remove later on!!! - do not use!!
-      puts "deprecated api - FixtureReader w/ yaml format - will get removed; please use new plain text manifest format"
-      @ary = old_deprecated_yaml_reader( text )
-    else
-      @ary = plain_text_reader( text )
-    end
+    @ary = plain_text_reader( text )
 
     logger.debug "fixture setup:"
     logger.debug @ary.to_json
@@ -73,30 +100,6 @@ class FixtureReader
     end # each lines
     ary  # return fixture ary
   end # method plain_text_reader
-
-
-  def old_deprecated_yaml_reader( text )
-    hash = YAML.load( text )
-    
-    ### build up array for fixtures from hash
-    ary = []
-    
-    hash.each do |key_wild, value_wild|
-      key   = key_wild.to_s.strip
-      
-      logger.debug "yaml key:#{key_wild.class.name} >>#{key}<<, value:#{value_wild.class.name} >>#{value_wild}<<"
-    
-      if value_wild.kind_of?( String ) # assume single fixture name
-        ary << value_wild
-      elsif value_wild.kind_of?( Array ) # assume array of fixture names as strings
-        ary = ary + value_wild
-      else
-        logger.error "unknow fixture type in setup (yaml key:#{key_wild.class.name} >>#{key}<<, value:#{value_wild.class.name} >>#{value_wild}<<); skipping"
-      end
-    end
-    ary  # return fixture ary
-  end
-
 
 
   def each

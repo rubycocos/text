@@ -6,24 +6,73 @@
 class ValuesReader
 
   include LogUtils::Logging
-  
+
   include TextUtils::ValueHelper # e.g. includes find_grade, find_key_n_title
 
 
-  def initialize( path, more_attribs={} )
+  def self.from_zip( zip_file, name, more_attribs={} )
+    ## fix: check if name ends in .txt ?? if not add .txt
+    ##  change name to path ?? e.g. make it required to pass in full entry path??
+    ### fix -fix -fix => change name to path
+
+    path = name.end_with?('.txt') ? name : "#{name}.txt"
+
+    ## fix: move out of from_zip
+    # map name to name_real_path
+    #   name might include !/ for virtual path (gets cut off)
+    #   e.g. at-austria!/w-wien/beers becomse w-wien/beers
+
+    pos = path.index( '!/')
+    if pos.nil?
+      real_path = path   # not found; real path is the same as name
+    else
+      # cut off everything until !/ e.g.
+      #   at-austria!/w-wien/beers becomes
+      #   w-wien/beers
+      real_path = path[ (pos+2)..-1 ]
+    end
+
+    ## get text content from zip
+    text = zip_file.read( real_path )
+
+    self.from_string( text, more_attribs )
+  end
+
+  def self.from_file( path, more_attribs={} )
+    ## note: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
+    ## - see textutils/utils.rb
+    text = File.read_utf8( path )
+
+    self.from_string( text, more_attribs )
+  end
+
+  def self.from_string( text, more_attribs={} )
+    ValuesReader.new( {text: text}, more_attribs )
+  end
+
+
+  def initialize( arg, more_attribs={} )
     @more_attribs = more_attribs
     
-    ### workaround/hack
-    #  if path includes newline assume it's a string buffer not a file name
-    #  fix: use  from_file an from_string etc. for  ctor
-    #   check  what is the best convention (follow  ???)
+    ### todo/fix: rename @data to @text !!!!
 
-    if path =~ /\n/m
-      @path = 'stringio'   # what name to use ???
-      @data = path.dup   # make a duplicate ?? why? why not?
-    else
-      @path = path
-      @data = File.read_utf8( @path )
+    if arg.is_a?( String )  ## old style (deprecated) - pass in filepath as string
+      path = arg
+
+      ### workaround/hack
+      #  if path includes newline assume it's a string buffer not a file name
+      #  fix: use  from_file an from_string etc. for  ctor
+      #   check  what is the best convention (follow  ???)
+      if path =~ /\n/m
+        logger.info "ValuesReader.new - deprecated API - use ValuesReader.from_string() instead"
+        @data = path.dup   # make a duplicate ?? why? why not?
+      else
+        logger.info "ValuesReader.new - deprecated API - use ValuesReader.from_file() instead"
+        @data = File.read_utf8( @path )
+      end
+    else   ## assume it's a hash
+      opts = arg
+      @data = opts[:text]
     end
   end
 

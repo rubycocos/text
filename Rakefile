@@ -21,6 +21,7 @@ Hoe.spec 'textutils' do
     ['props'],
     ['logutils'],
     ### 3rd party gems
+    ['rubyzip'],   ## todo/check: make optional -why? why not??
     ['activesupport']
   ]
 
