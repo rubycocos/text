@@ -10,30 +10,16 @@ class ValuesReader
   include TextUtils::ValueHelper # e.g. includes find_grade, find_key_n_title
 
 
-  def self.from_zip( zip_file, name, more_attribs={} )
-    ## fix: check if name ends in .txt ?? if not add .txt
-    ##  change name to path ?? e.g. make it required to pass in full entry path??
-    ### fix -fix -fix => change name to path
-
-    path = name.end_with?('.txt') ? name : "#{name}.txt"
-
-    ## fix: move out of from_zip
-    # map name to name_real_path
-    #   name might include !/ for virtual path (gets cut off)
-    #   e.g. at-austria!/w-wien/beers becomse w-wien/beers
-
-    pos = path.index( '!/')
-    if pos.nil?
-      real_path = path   # not found; real path is the same as name
-    else
-      # cut off everything until !/ e.g.
-      #   at-austria!/w-wien/beers becomes
-      #   w-wien/beers
-      real_path = path[ (pos+2)..-1 ]
-    end
-
+  def self.from_zip( zip_file, entry_path, more_attribs={} )
     ## get text content from zip
-    text = zip_file.read( real_path )
+
+    entry = zip_file.find_entry( entry_path )
+
+    ## todo/fix: add force encoding to utf-8 ??
+    ##  check!!!
+    ##  clean/prepprocess lines
+    ##  e.g. CR/LF (/r/n) to LF (e.g. /n)
+    text = entry.get_input_stream().read()
 
     self.from_string( text, more_attribs )
   end

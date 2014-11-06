@@ -13,16 +13,15 @@ class FixtureReader
   include LogUtils::Logging
 
 
-  def self.from_zip( zip_file, name )
+  def self.from_zip( zip_file, entry_path )
+    entry = zip_file.find_entry( entry_path )
 
-    ## fix: check if name ends in .txt ?? if not add .txt
-    ##  change name to path ?? e.g. make it required to pass in full entry path??
-    ### fix -fix -fix => change name to path
+    ## todo/fix: add force encoding to utf-8 ??
+    ##  check!!!
+    ##  clean/prepprocess lines
+    ##  e.g. CR/LF (/r/n) to LF (e.g. /n)
+    text = entry.get_input_stream().read()
 
-    path = name.end_with?('.txt') ? name : "#{name}.txt"
-
-    ## get text content from zip
-    text = zip_file.read( path )
     self.from_string( text )
   end
 
