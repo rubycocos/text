@@ -22,6 +22,21 @@ class FixtureReader
     ##  e.g. CR/LF (/r/n) to LF (e.g. /n)
     text = entry.get_input_stream().read()
 
+    ## NOTE: needs logger ref; only available in instance methods; use global logger for now
+    logger = LogUtils::Logger.root
+    logger.debug "text.encoding.name (before): #{text.encoding.name}"
+#####
+# NB: ASCII-8BIT == BINARY == Encoding Unknown; Raw Bytes Here
+## NB:
+# for now "hardcoded" to utf8 - what else can we do?
+# - note: force_encoding will NOT change the chars only change the assumed encoding w/o translation
+    text = text.force_encoding( Encoding::UTF_8 )
+    logger.debug "text.encoding.name (after): #{text.encoding.name}"     
+
+    ## todo:
+    # NB: for convenience: convert fancy unicode dashes/hyphens to plain ascii hyphen-minus
+    ## text = TextUtils.convert_unicode_dashes_to_plain_ascii( text, path: path )
+
     self.from_string( text )
   end
 
