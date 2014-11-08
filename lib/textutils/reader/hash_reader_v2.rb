@@ -32,7 +32,7 @@ class HashReaderV2
 
   def each
     path          = "#{include_path}/#{name_real_path}.yml"
-    reader        = HashReader.new( path )
+    reader        = HashReader.from_file( path )
 
     logger.info "parsing data '#{name}' (#{path})..."
 
@@ -46,7 +46,7 @@ class HashReaderV2
 
   def each_typed
     path          = "#{include_path}/#{name_real_path}.yml"
-    reader        = HashReader.new( path )
+    reader        = HashReader.from_file( path )
 
     logger.info "parsing data '#{name}' (#{path})..."
 

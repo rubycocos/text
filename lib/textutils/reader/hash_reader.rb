@@ -7,14 +7,28 @@ class HashReader
 
   include LogUtils::Logging
 
-  def initialize( path )
-    @path = path
-
+  def self.from_file( path )
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
     ## - see textutils/utils.rb
-    
-    text = File.read_utf8( @path )
-   
+    text = File.read_utf8( path )
+    self.from_string( text )
+  end
+
+  def self.from_string( text )
+    HashReader.new( text: text )
+  end
+
+  def initialize( arg )
+
+    if arg.is_a?( String )  ## old style (deprecated) - pass in filepath as string
+      path = arg
+      logger.info "HashReader.new - deprecated API - use HashReader.from_file() instead"
+      text = File.read_utf8( path )
+    else   ## assume it's a hash
+      opts = arg
+      text = opts[:text]
+    end
+
     ### hack for syck yaml parser (e.g.ruby 1.9.2) (cannot handle !!null)
     ##   change it to !null to get plain nil
     ##   w/ both syck and psych/libyml

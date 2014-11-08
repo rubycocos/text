@@ -32,7 +32,8 @@ class TestTitleMapper < Minitest::Test
       ['andreaspolsterer', [ 'Weingut Andreas B\. Polsterer', 'Andreas B\. Polsterer \(1970\)', 'Andreas B\. Polsterer' ]]
     ]
 
-    titles_out = TextUtils.build_title_table_for( titles_in )
+    mapper = TextUtils::TitleMapper.new( titles_in, 'winery' )
+    titles_out = mapper.known_titles
 
     puts 'titles_out:'
     pp titles_out

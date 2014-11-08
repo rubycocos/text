@@ -19,9 +19,18 @@ class TableReader    ## rename to CsvTableReader ? or CsvReader?
 
   include LogUtils::Logging
 
-  def initialize( path, opts={} )
+  def self.from_file( path )
+    text = 'to be done'
+    self.from_string( text )
+  end
+  
+  def self.from_string( text )
+    TableReader.new( text )
+  end
+
+  def initialize( text, opts={} )
     @opts = opts
-    @path = path
+    @text = text
     ## to be done
   end
 

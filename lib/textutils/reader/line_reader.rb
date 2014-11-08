@@ -1,60 +1,58 @@
 # encoding: utf-8
 
-##
-## fix/todo: move to/merge into LineReader itself
-#   e.g. use  fromString c'tor ??? or similar??
-
 # fix: move into TextUtils namespace/module!!
 
 
 class StringLineReader
+  ## fix/todo:
+  ##   remove - deprecated/obsolete - do NOT use
+  ##   use LineReader.from_string
 
   include LogUtils::Logging
 
-  def initialize( data )
-    @data = data
+  def initialize( text )
+    logger.info "StringLineReader.new - deprecated API - use LineReader.from_string() instead"
+    @reader = LineReader.from_string( text )
   end
 
-
   def each_line
-    @data.each_line do |line|
-  
-      if line =~ /^\s*#/
-        # skip komments and do NOT copy to result (keep comments secret!)
-        logger.debug 'skipping comment line'
-        next
-      end
-        
-      if line =~ /^\s*$/ 
-        # kommentar oder leerzeile überspringen 
-        logger.debug 'skipping blank line'
-        next
-      end
-
-      # remove leading and trailing whitespace
-      line = line.strip
- 
+    @reader.each_line do |line|    
       yield( line )
     end # each lines
   end # method each_line
-
 end
+
 
 
 class LineReader
 
   include LogUtils::Logging
 
-  def initialize( path )
-    @path = path
-
+  def self.from_file( path )
     ## nb: assume/enfore utf-8 encoding (with or without BOM - byte order mark)
     ## - see textutils/utils.rb
-    @data = File.read_utf8( @path )
+    text = File.read_utf8( path )
+    self.from_string( text )
+  end
+
+  def self.from_string( text )
+    LineReader.new( text: text )
+  end
+
+
+  def initialize( arg )
+    if arg.is_a?( String )  ## old style (deprecated) - pass in filepath as string
+      path = arg
+      logger.info "LineReader.new - deprecated API - use LineReader.from_file() instead"
+      @text = File.read_utf8( path )
+    else   ## assume it's a hash
+      opts = arg
+      @text = opts[:text]
+    end
   end
 
   def each_line
-    @data.each_line do |line|
+    @text.each_line do |line|
 
       # comments allow:
       # 1) #####  (shell/ruby style)

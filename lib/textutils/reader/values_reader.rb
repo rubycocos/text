@@ -55,7 +55,7 @@ class ValuesReader
   def initialize( arg, more_attribs={} )
     @more_attribs = more_attribs
     
-    ### todo/fix: rename @data to @text !!!!
+    ### todo/fix: rename @text to @text !!!!
 
     if arg.is_a?( String )  ## old style (deprecated) - pass in filepath as string
       path = arg
@@ -66,14 +66,14 @@ class ValuesReader
       #   check  what is the best convention (follow  ???)
       if path =~ /\n/m
         logger.info "ValuesReader.new - deprecated API - use ValuesReader.from_string() instead"
-        @data = path.dup   # make a duplicate ?? why? why not?
+        @text = path.dup   # make a duplicate ?? why? why not?
       else
         logger.info "ValuesReader.new - deprecated API - use ValuesReader.from_file() instead"
-        @data = File.read_utf8( @path )
+        @text = File.read_utf8( @path )
       end
     else   ## assume it's a hash
       opts = arg
-      @data = opts[:text]
+      @text = opts[:text]
     end
   end
 
@@ -102,7 +102,7 @@ class ValuesReader
     last_header  = nil
 
 
-    @data.each_line do |line|
+    @text.each_line do |line|
 
       ## allow alternative comment lines
       ## e.g. -- comment or

@@ -28,7 +28,7 @@ Schwechater Zwickl,      5.4%, 12.5°, 45.0 kcal/100ml
 
 EOS
 
-    reader = ValuesReader.new( txt )
+    reader = ValuesReader.from_string( txt )
 
     i = 0
     reader.each_line do |attribs, values|
@@ -80,7 +80,7 @@ EOS
 
     pp txt
 
-    reader = ValuesReader.new( txt )
+    reader = ValuesReader.from_string( txt )
 
     i = 0
     reader.each_line do |attribs, values|
@@ -146,7 +146,7 @@ weitra, Weitra Bräu Bierwerkstatt|Brauerei Weitra *, 1321, www.bierwerkstatt.at
 egger, Privatbrauerei Fritz Egger **, 1978, www.egger-bier.at, 3105 Unterradlberg // Tiroler Straße 18
 EOS
 
-    reader = ValuesReader.new( txt )
+    reader = ValuesReader.from_string( txt )
 
     i = 0
     reader.each_line do |attribs, values|
@@ -236,7 +236,7 @@ EOS
   brands: Zwettler
 EOS
 
-    reader = ValuesReader.new( txt )
+    reader = ValuesReader.from_string( txt )
 
     i = 0
     reader.each_line do |attribs, values|
@@ -283,7 +283,7 @@ manunited,   Manchester United|Man Utd|Manchester U.,   MUN, city:manchester
 liverpool,   Liverpool|Liverpool FC|FC Liverpool,       LIV, city:liverpool
 EOS
 
-    reader = ValuesReader.new( txt )
+    reader = ValuesReader.from_string( txt )
 
     i = 0
     reader.each_line do |attribs, values|
@@ -318,7 +318,7 @@ Ottakringer (Gold Fassl) Pils,       4.6 %, 11.2°
 Ottakringer (Gold Fassl) Pur {Bio},  5.2 %, 11.8°, bio
 EOS
 
-    reader = ValuesReader.new( txt )
+    reader = ValuesReader.from_string( txt )
 
     i = 0
     reader.each_line do |attribs, values|

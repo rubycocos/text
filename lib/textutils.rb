@@ -63,6 +63,7 @@ require 'textutils/reader/fixture_reader'
 
 require 'textutils/classifier'
 require 'textutils/title'    # title table/mapper/finder utils
+require 'textutils/title_mapper'
 
 require 'textutils/page'   # for book pages and page templates
 

@@ -7,19 +7,31 @@
 #   or rename to KeyMapping?, KeyMapper?, KeyTable? etc.
 
 
+######
+## todo/check:
+###   remove - use TitleMapper instead
+##  deprecated/obsolete - do NOT use will get removed
+
+
 module TextUtils
   module TitleTable
 
 ####
 ## fix: turn it into a class w/ methods
 #
-#e.g  t =TitleTable.new( records, name )  # e.g. name='team'
+#e.g  t =TitleMapper.new( records, name )  # e.g. name='team'
 #  t.map!( line )
 #  t.find_key!( line )
 # etc.
+#
+#  see textutils/title_mapper.rb
+#
+#   deprecate code here!!! - move to new TitleMapper class
 
 
 def build_title_table_for( records )
+    LogUtils::Logger.root.info "  build_title_table_for - deprecated API - use TitleMapper.new instead"
+
     ## build known tracks table w/ synonyms e.g.
     #
     # [[ 'wolfsbrug', [ 'VfL Wolfsburg' ]],
@@ -72,6 +84,8 @@ end
 
 
 def find_key_for!( name, line )
+  LogUtils::Logger.root.info "  find_key_for! #{name} - deprecated API - use TitleMapper.find_key! instead"
+
   regex = /@@oo([^@]+?)oo@@/     # e.g. everything in @@ .... @@ (use non-greedy +? plus all chars but not @, that is [^@])
 
   upcase_name   = name.upcase
@@ -92,6 +106,8 @@ end
 
 
 def find_keys_for!( name, line )  # NB: keys (plural!) - will return array
+  LogUtils::Logger.root.info "  find_keys_for! #{name} - deprecated API - use TitleMapper.find_keys! instead"
+
   counter = 1
   keys = []
 
@@ -109,6 +125,8 @@ end
 
 
 def map_titles_for!( name, line, title_table )
+  LogUtils::Logger.root.info "  map_titles_for! #{name} - deprecated API - use TitleMapper.map_titles! instead"
+
   title_table.each do |rec|
     key    = rec[0]
     values = rec[1]

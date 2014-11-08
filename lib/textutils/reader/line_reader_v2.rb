@@ -32,7 +32,7 @@ class LineReaderV2
 
   def each_line
     path          = "#{include_path}/#{name_real_path}.txt"
-    reader        = LineReader.new( path )
+    reader        = LineReader.from_file( path )
 
     logger.info "parsing data '#{name}' (#{path})..."
 

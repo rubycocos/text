@@ -32,6 +32,7 @@ lib/textutils/reader/values_reader.rb
 lib/textutils/reader/values_reader_v2.rb
 lib/textutils/sanitizier.rb
 lib/textutils/title.rb
+lib/textutils/title_mapper.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
 test/data/cl_all.txt
