@@ -4,7 +4,7 @@
 require 'helper'
 
 
-class TestTaglist < MiniTest::Unit::TestCase
+class TestTaglist < Minitest::Test
 
   include TextUtils::ValueHelper   #  lets us use is_taglist?, etc.
 

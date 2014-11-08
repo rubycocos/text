@@ -4,7 +4,7 @@
 require 'helper'
 
 
-class TestTitleMapper < MiniTest::Unit::TestCase
+class TestTitleMapper < Minitest::Test
 
   WineryStruct =  Struct.new(:key, :title, :synonyms)
 

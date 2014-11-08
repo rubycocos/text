@@ -4,7 +4,7 @@
 require 'helper'
 
 
-class TestAsciify < MiniTest::Unit::TestCase
+class TestAsciify < Minitest::Test
 
   def test_asciify
 

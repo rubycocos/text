@@ -3,7 +3,7 @@
 require 'helper'
 
 
-class TestTitleHelper < MiniTest::Unit::TestCase
+class TestTitleHelper < Minitest::Test
 
   def test_title_to_key
     

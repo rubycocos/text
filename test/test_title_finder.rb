@@ -4,7 +4,7 @@
 require 'helper'
 
 
-class TestTitleFinder < MiniTest::Unit::TestCase
+class TestTitleFinder < Minitest::Test
 
   include TextUtils::ValueHelper   #  lets us use find_grade, etc.
 

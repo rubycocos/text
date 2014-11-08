@@ -8,7 +8,7 @@
 
 require 'helper'
 
-class TestUnicodeHelper < MiniTest::Unit::TestCase
+class TestUnicodeHelper < Minitest::Test
 
   def test_convert_unicode_dashes
     

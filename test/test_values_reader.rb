@@ -8,7 +8,7 @@
 
 require 'helper'
 
-class TestValuesReader < MiniTest::Unit::TestCase
+class TestValuesReader < Minitest::Test
 
   def test_header
     txt =<<EOS

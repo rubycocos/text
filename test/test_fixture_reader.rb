@@ -1,14 +1,14 @@
 require 'helper'
 
 
-class TestFixtureReader < MiniTest::Unit::TestCase
+class TestFixtureReader < Minitest::Test
 
   def test_read
-    path = "#{TextUtils.root}/test/cl_all.txt"
+    path = "#{TextUtils.root}/test/data/cl_all.txt"
     puts "[TestFixtureReader.test_read] path: #{path}"
-    
-    reader = FixtureReader.new( path )
-    
+
+    reader = FixtureReader.from_file( path )
+
     ary = [
       'europe-champions-league!/leagues',
       'europe-champions-league!/2011_12/cl',

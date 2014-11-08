@@ -9,7 +9,7 @@
 require 'helper'
 
 
-class TestHypertextHelper < MiniTest::Unit::TestCase
+class TestHypertextHelper < Minitest::Test
 
   include TextUtils::HypertextHelper   #  lets us use textify, etc.
 

@@ -3,7 +3,7 @@
 
 require 'helper'
 
-class TestAddressHelper < MiniTest::Unit::TestCase
+class TestAddressHelper < Minitest::Test
 
   def test_normalize_addr
     

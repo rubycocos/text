@@ -2,7 +2,7 @@
 
 require 'helper'
 
-class TestSlugify < MiniTest::Unit::TestCase
+class TestSlugify < Minitest::Test
 
   def test_slugify
 
