@@ -1,31 +1,28 @@
 # encoding: utf-8
 
-
 # core and stlibs
 
+require 'json'
 require 'yaml'
-require 'pp'
-require 'logger'
-require 'optparse'
-require 'fileutils'
 require 'erb'
+require 'pp'
+require 'fileutils'
+
 
 # 3rd party gems / libs
+require 'zip'       ### used for .from_zip for readers
 
-require 'zip'
-
-
-# fix: remove version from activerecord in deps
+### todo/check - document active_support methods that get used
 require 'active_support/all'   # String.starts_with?, Object.blank?, etc.
 
+
 require 'props'
-require 'props/db'   ## for Prop model --> move create_from fixtures to textutils!!
 require 'logutils'
+
 
 # our own code
 
 require 'textutils/version'      ## let version always go first
-
 
 require 'textutils/patterns'   # regex patterns for reuse
 require 'textutils/sanitizier'
@@ -54,11 +51,8 @@ require 'textutils/parser/name_parser'
 
 require 'textutils/reader/code_reader'
 require 'textutils/reader/hash_reader'
-require 'textutils/reader/hash_reader_v2'
 require 'textutils/reader/line_reader'
-require 'textutils/reader/line_reader_v2'
 require 'textutils/reader/values_reader'
-require 'textutils/reader/values_reader_v2'
 require 'textutils/reader/fixture_reader'
 
 require 'textutils/classifier'
@@ -69,5 +63,5 @@ require 'textutils/page'   # for book pages and page templates
 
 
 
-
-puts TextUtils.banner   if $DEBUG    # say hello
+# say hello
+puts TextUtils.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)

@@ -43,5 +43,5 @@ class TableReader    ## rename to CsvTableReader ? or CsvReader?
 
   ## to be done
 
-end # class MarkdownReader
+end # class TableReader
 

@@ -18,17 +18,17 @@ Hoe.spec 'textutils' do
   self.history_file = 'HISTORY.md'
 
   self.extra_deps = [
-    ['props'],
-    ['logutils'],
+    ['props',    '>=1.1.2'],
+    ['logutils', '>=0.6.1'],
     ### 3rd party gems
     ['rubyzip'],   ## todo/check: make optional -why? why not??
-    ['activesupport']
+    ['activesupport']    ## todo/check:  really needed? document what methods get used
   ]
 
   self.licenses = ['Public Domain']
 
   self.spec_extras = {
-   :required_ruby_version => '>= 1.9.2'
+    required_ruby_version: '>= 1.9.2'
   }
 
 end
