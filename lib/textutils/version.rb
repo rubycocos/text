@@ -2,8 +2,8 @@
 
 module TextUtils
 
-  MAJOR = 0 ## todo: namespace inside version or something - why? why not??
-  MINOR = 10
+  MAJOR = 1 ## todo: namespace inside version or something - why? why not??
+  MINOR = 0
   PATCH = 0
   VERSION = [MAJOR,MINOR,PATCH].join('.')
 

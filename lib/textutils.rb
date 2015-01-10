@@ -54,6 +54,7 @@ require 'textutils/reader/hash_reader'
 require 'textutils/reader/line_reader'
 require 'textutils/reader/values_reader'
 require 'textutils/reader/fixture_reader'
+require 'textutils/reader/block_reader'
 
 require 'textutils/classifier'
 require 'textutils/title'    # title table/mapper/finder utils
