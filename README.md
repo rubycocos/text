@@ -2,8 +2,8 @@
 
 Text Filters, Helpers, Readers and More in Ruby
 
-* home  :: [github.com/rubylibs/textutils](https://github.com/rubylibs/textutils)
-* bugs  :: [github.com/rubylibs/textutils/issues](https://github.com/rubylibs/textutils/issues)
+* home  :: [github.com/textkit/textutils](https://github.com/textkit/textutils)
+* bugs  :: [github.com/textkit/textutils/issues](https://github.com/textkit/textutils/issues)
 * gem   :: [rubygems.org/gems/textutils](https://rubygems.org/gems/textutils)
 * rdoc  :: [rubydoc.info/gems/textutils](http://rubydoc.info/gems/textutils)
 * forum :: [ruby-talk@ruby-lang.org](www.ruby-lang.org/en/community/mailing-lists/)
@@ -91,16 +91,13 @@ The [`slideshow`](http://slideshow-s9.github.io) gem (also known as Slide Show (
 that lets you create slide shows
 and author slides in plain text using a wiki-style markup language that's easy-to-write and easy-to-read.
 
-The [`markdown`](https://github.com/rubylibs/markdown) gem that lets you use your markdown library
+The [`markdown`](https://github.com/writekit/markdown) gem that lets you use your markdown library
 of choice.
 
-The [`worlddb`](https://github.com/geraldb/world.db.ruby) gem that offers a command line tool for the open world database (`world.db`).
+The [`worlddb`](https://github.com/worlddb/world.db.ruby) gem that offers a command line tool for the open world database (`world.db`).
 
-The [`sportdb`](https://github.com/geraldb/sport.db.ruby) gem that offers a command line tool for the open sport/football database (`sport.db`/`football.db`).
+The [`sportdb`](https://github.com/sportdb/sport.db.ruby) gem that offers a command line tool for the open sport/football database (`sport.db`/`football.db`).
 
-## Alternatives
-
-TBD
 
 ## License
 

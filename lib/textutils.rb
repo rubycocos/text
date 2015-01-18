@@ -7,6 +7,8 @@ require 'yaml'
 require 'erb'
 require 'pp'
 require 'fileutils'
+require 'time'
+require 'date'
 
 
 # 3rd party gems / libs
@@ -46,6 +48,8 @@ require 'textutils/helper/value_helper'
 require 'textutils/utils'
 require 'textutils/core_ext/file'
 require 'textutils/core_ext/time'
+require 'textutils/core_ext/array'
+
 
 require 'textutils/parser/name_parser'
 

@@ -6,6 +6,12 @@ class File
       file.read
     end
 
+    ## todo/fix:
+    ##   normalize newlines
+    ##    always use \n
+    ##   convert \n\r (Windows)  => \n
+    ##   convert \r (old? Mac)   => \n
+
     # NB: for convenience: convert fancy unicode dashes/hyphens to plain ascii hyphen-minus
     text = TextUtils.convert_unicode_dashes_to_plain_ascii( text, path: path )
 
