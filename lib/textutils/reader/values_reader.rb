@@ -86,11 +86,40 @@ class ValuesReader
 # and so on - lets us reuse code for tags and more
 
 
-  def each_line   # support multi line records
+  def each_line       # old style w/o meta hash   -- rename to each_record - why, why not???
+    each_line_with_meta do |attribs|
+        ## remove meta
+        if attribs[:meta].present?
+          attribs.delete(:meta)
+        end
+
+        ## (more) values array entry - make top level 
+        values = attribs[:values]
+        attribs.delete(:values)
+
+        yield( attribs, values )
+    end
+  end
+
+
+  def each_line_with_meta    # support multi line records   -- rename to each_record_with_  - why, why not??
 
     inside_record  = false
     blank_counter  = 0    # count of number of blank lines (note: 1+ blank lines clear multi-line record)
     values         = []
+    meta           = {}
+
+    ###
+    # meta
+    #  use format or style key ??
+    #   use   line|multiline   or classic|modern  or csv|csv+ etc.??
+    #
+    #  move header to meta (from top-level)  - why, why not ??
+    #    or use context for header and sections etc.????
+    #  move section to meta - why, why not ??
+    #
+    # might add lineno etc. in future??
+
 
     # keep track of last header
     #  e.g. lines like
@@ -164,8 +193,11 @@ class ValuesReader
           attribs, more_values = find_key_n_title( values )
           attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
           attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
-          yield( attribs, more_values )
+          attribs[:values] = more_values 
+          attribs[:meta]   = meta
+          yield( attribs )
           values         = []
+          meta           = {}
         end
         inside_record  = false
         blank_counter  = 0
@@ -185,11 +217,15 @@ class ValuesReader
           attribs, more_values = find_key_n_title( values )
           attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
           attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
-          yield( attribs, more_values )
+          attribs[:values] = more_values 
+          attribs[:meta]   = meta
+          yield( attribs )
           values         = []
+          meta           = {}
         end
         inside_record  = true
         blank_counter  = 0
+        meta[:format]  = :multiline    # use :modern - why, why not?
 
         # NB: every additional line is one value e.g. city:wien, etc.
         #  allows you to use any chars
@@ -199,6 +235,7 @@ class ValuesReader
       elsif inside_record && blank_counter == 0 && line =~ /\/{2}/ # check address line (must contain //)
         values += [line.dup]     # assume single value column (no need to escape commas)
       elsif inside_record && blank_counter == 0 && line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/ # check key: value pair
+        ### todo: split key n value and add to attrib hash  - why, why not???
         values += [line.dup]     # assume single value column (no need to escape commas)
       else
         if inside_record && blank_counter == 0   # continue adding more values
@@ -208,12 +245,16 @@ class ValuesReader
             attribs, more_values = find_key_n_title( values )
             attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
             attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
-            yield( attribs, more_values )
+            attribs[:values] = more_values
+            attribs[:meta]   = meta
+            yield( attribs )
             values         = []
+            meta           = {}
           end
           inside_record  = false
           blank_counter  = 0
-          values = find_values( line )
+          meta[:format]  = :line    # use :classic - why, why not?
+          values         = find_values( line )
         end
       end
 
@@ -224,7 +265,9 @@ class ValuesReader
       attribs, more_values = find_key_n_title( values )
       attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
       attribs[:header] = last_header   unless last_header.nil?   # add optional header attrib
-      yield( attribs, more_values )
+      attribs[:values] = more_values 
+      attribs[:meta]   = meta
+      yield( attribs )
     end
 
   end # method each_line
