@@ -113,7 +113,13 @@ class ValuesReader
       ## NOTE: for now alternative comment lines not allowed as end of line style e.g
       ##  some data, more data   -- comment here
 
-      if line =~ /^\s*#/  ||
+      ######
+      ## note:
+      ##   # comment MUST follow a space or end-of-line e.g.
+      ##     #1 or #hello or #(hello) or #{hello}  is NOT a comment
+      ##   ###### is however
+
+      if line =~ /^\s*#+(\s|$)/  ||    # old - simple rule -- /^\s*#/
          line =~ /^\s*--/ ||
          line =~ /^\s*%/  ||
          line =~ /^\s*__/
@@ -129,6 +135,23 @@ class ValuesReader
         next
       end
 
+      # pass 1) remove possible trailing eol comment
+      ##  e.g    -> nyc, New York   # Sample EOL Comment Here (with or without commas,,,,)
+      ## becomes -> nyc, New York
+      #
+      ##  note - comment must follow a space or end-of-line
+      #    #1 or #hello or #{hello} is NOT a comment !!!
+      #    note ###### is a comment
+
+      line = line.sub( /\s+#+(\s.+)?$/, '' )
+
+      # pass 2) remove leading and trailing whitespace
+
+      line = line.strip
+
+
+
+
       ### NOTE: skip sections lines (marked w/ at least ==) for now
       ###  e.g.  === Waldviertel ===
       if line =~ /^\s*={2,}\s+/
@@ -136,19 +159,7 @@ class ValuesReader
         next
       end
 
-
-      # pass 1) remove possible trailing eol comment
-      ##  e.g    -> nyc, New York   # Sample EOL Comment Here (with or without commas,,,,)
-      ## becomes -> nyc, New York
-
-      line = line.sub( /\s+#.+$/, '' )
-
-      # pass 2) remove leading and trailing whitespace
-      
-      line = line.strip
-
-
-      if line =~ /^-\s+/   # check for group headers  e.g.  - St. James Brewery
+      if line =~ /^-\s+/   # check for group headers (MUST start w/ dash (-) e.g.  - St. James Brewery)
         if values.length > 0  # check if we already processed a record? if yes; yield last record (before reset)
           attribs, more_values = find_key_n_title( values )
           attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
@@ -160,14 +171,16 @@ class ValuesReader
         blank_counter  = 0
 
         # update last_header
-        last_header = line.gsub( /^-\s/, '' )  # cut-off leading marker and space
+        last_header = line.sub( /^-\s+/, '' )  # cut-off leading marker and space
         logger.info "  update group header >#{last_header}<"
         next
-      elsif line =~ /^\[([a-z][a-z]+)\]/
-      ### check for multiline record
-      ##    must start with key e.g. [guiness]
-      ##   for now only supports key with letter a-z (no digits/numbers or underscore or dots)
- 
+      end
+
+
+      if line =~ /^\[(.+)\]$/   # note: check for multiline record; MUST start w/ [ and end w/ ]
+
+        value = $1.strip    # note: remove (allow) possible leading n trailing spaces
+
         if values.length > 0  # check if we already processed a record? if yes; yield last record (before reset)
           attribs, more_values = find_key_n_title( values )
           attribs = attribs.merge( @more_attribs )  # e.g. merge country_id and other defaults if present
@@ -180,9 +193,9 @@ class ValuesReader
 
         # NB: every additional line is one value e.g. city:wien, etc.
         #  allows you to use any chars
-        logger.debug "   multi-line record w/ key »#{$1}«"
+        logger.debug "   start multi-line record w/ »#{value}«"
 
-        values         = [$1.dup]    # add key as first value in ary
+        values         = [value]    # add as first value in ary - note: find_key_n_title will check if value is a key or not
       elsif inside_record && blank_counter == 0 && line =~ /\/{2}/ # check address line (must contain //)
         values += [line.dup]     # assume single value column (no need to escape commas)
       elsif inside_record && blank_counter == 0 && line =~ /^[a-z][a-z0-9.]*[a-z0-9]:/ # check key: value pair
@@ -244,23 +257,6 @@ class ValuesReader
     # pass 1) remove leading and trailing whitespace for values
 
     values = values.map { |value| value.strip }
-
-
-    ##### todo/fix:
-    #  !!!REMOVE!!!
-    # remove support of comment column? (NB: must NOT include commas)
-    # pass 2) remove comment columns
-    #
-    #  todo/fix: check if still possible ?? - add an example here how it looks like/works
-
-    values = values.select do |value|
-      if value =~ /^#/  ## start with # treat it as a comment column; e.g. remove it
-        logger.info "   removing column with value »#{value}«"
-        false
-      else
-        true
-      end
-    end
 
     logger.debug "  values: |»#{values.join('« »')}«|"
     values

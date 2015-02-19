@@ -116,3 +116,18 @@
     end # each lines
 
   end # method each_line
+
+
+def find_values
+    # pass 2) remove comment columns
+    #  todo/fix: check if still possible ?? - add an example here how it looks like/works
+
+    values = values.select do |value|
+      if value =~ /^#/  ## start with # treat it as a comment column; e.g. remove it
+        logger.info "   removing column with value »#{value}«"
+        false
+      else
+        true
+      end
+    end
+end
