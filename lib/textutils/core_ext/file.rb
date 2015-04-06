@@ -6,11 +6,15 @@ class File
       file.read
     end
 
-    ## todo/fix:
+    ##
+    ## todo: make normalize newlines into a filter (for easy (re)use)
+
     ##   normalize newlines
-    ##    always use \n
-    ##   convert \n\r (Windows)  => \n
-    ##   convert \r (old? Mac)   => \n
+    ##    always use LF \n (Unix):
+    ##
+    ##   convert CR/LF \r\n (Windows)  => \n
+    ##   convert CR    \r   (old? Mac) => \n  -- still in use?
+    text = text.gsub( /\r\n|\r/, "\n" )
 
     # NB: for convenience: convert fancy unicode dashes/hyphens to plain ascii hyphen-minus
     text = TextUtils.convert_unicode_dashes_to_plain_ascii( text, path: path )
