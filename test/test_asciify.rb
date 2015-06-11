@@ -1,5 +1,9 @@
 # encoding: utf-8
 
+###
+#  to run use
+#     ruby -I ./lib -I ./test test/test_asciify.rb
+
 
 require 'helper'
 
@@ -36,7 +40,8 @@ class TestAsciify < Minitest::Test
       [ 'Galați', 'Galati' ],
       [ 'Reșița', 'Resita' ],
       [ 'Chișinău', 'Chisinau' ],
-      [ "Pe\u{030C}awar", 'Pexawar']  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
+      [ "Pe\u{030C}awar", 'Pexawar'],  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
+      [ 'Übelbach', 'Uebelbach' ]
     ]
 
     txt_io.each do |txt|

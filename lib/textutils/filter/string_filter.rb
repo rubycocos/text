@@ -118,7 +118,10 @@ module TextUtils
         'Ṣ' => 'S',  # e.g. Ṣan'ā' [Sana'a]
 
         'Ṭ' => 'T',  # e.g. Ṭarābulus [Tripoli]
+
+        'Ü' => 'Ue', # e.g. Übelbach
         'Ú' => 'U',  # e.g. Ústí, Újpest
+
         'Ž' => 'Z',  # e.g. Žilina
         'Ż' => 'Z',   # e.g. Żywiec (polish) -- Latin captial letter Z with caron
 
