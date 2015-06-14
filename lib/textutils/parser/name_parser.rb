@@ -2,60 +2,65 @@
 
 # fix: move into TextUtils namespace/module!! ??
 
+class NameParser
 
-class NameTokenizer   ## - rename to NameScanner, NameSplitter, NameSeparator, etc.
-
-  ## split (single) string value into array of names
-  ##   e.g.
-  ##   'München [Munich]'             => ['München', '[Munich]']
-  ##   'Wr. Neustadt | Wiener Neustadt' => ['Wr. Neustadt', 'Wiener Neustadt']
   include LogUtils::Logging
 
-  def tokenize( value )   ## rename to/use split - why? why not??
-    names = []
+  def parse( chunks )
+    ## todo/fix: (re)use nameparser - for now "simple" inline version
+    ##  fix!!! - note: for now lang gets ignored
+    ##  fix: add hanlde
+    ##  Leuven[nl]|Louvain[fr] Löwen[de]
+    ##  Antwerpen[nl]|Anvers[fr] [Antwerp]
+    ##  Brussel[nl]•Bruxelles[fr]   -> official bi-lingual name
+    ##  etc.
 
-    # 1)  split by | (pipe) -- remove leading n trailing whitespaces
-    parts = value.split( /[ \t]*\|[ \t]*/ )
+    ## values - split into names (name n lang pairs)
+    ## note: assumes (default) lang from more_attribs unless otherwise marked e.g. [] assume en etc.
 
-    # 2)  split "inline" translations e.g. München [Munich]
+    ## split chunks into values
+    values = []
+    chunks.each do |chunk|
+      next if chunk.nil? || chunk.blank?  ## skip nil or empty/blank chunks
 
-    ## todo: add support for  Munich [en]  e.g. trailing lang tag
-    ## todo: add support for bullet (official bi-lingual names w/ tags ??) - see brussels - why, why not??
+      parts = chunk.split( '|' )   # 1)  split |
 
-    parts.each do |part|
+      parts.each do |part|
         s = StringScanner.new( part )
         s.skip( /[ \t]+/)   # skip whitespaces
 
         while s.eos? == false
           if s.check( /\[/ )
             ## scan everything until the end of bracket (e.g.])
-            name = s.scan( /\[[^\]]+\]/)
-            ## todo/fix: if name nil - issue warning??
-            #  starting w/ [  but no closing ] found !!!! - possible? fix!!
+            ##  fix!!! - note: for now lang gets ignored
+            value = s.scan( /\[[^\]]+\]/)
+            value = value[1...-1]   # strip enclosing [] e.g. [Bavaria] => Bavaria
           else
             ## scan everything until the begin of bracket (e.g.[)
-            name = s.scan( /[^\[]+/)
-            name = name.rstrip   ## remove trailing spaces (if present)
+            value = s.scan( /[^\[]+/)
+            value = value.strip
           end
-          names << name
+          values << value
 
           s.skip( /[ \t]+/)  # skip whitespaces
-          logger.debug( "[NameTokenizer] eos?: #{s.eos?}, rest: >#{s.rest}<" )
+          logger.debug( "[NameParser] eos?: #{s.eos?}, rest: >#{s.rest}<" )
         end
-    end # each part
+      end
+    end
 
-    logger.debug( "[NameTokenizer] names=#{names.inspect}")
+    logger.debug( "[NameParser] values=#{values.inspect}")
+
+    names = []
+    values.each do |value|
+      name = value
+      ## todo: split by bullet ? (official multilang name) e.g. Brussel • Bruxelles
+      ## todo: process variants w/ () e.g. Krems (a. d. Donau) etc. ??
+      names << name
+    end
+
+    logger.debug( "[NameParser] names=#{names.inspect}")
+
     names
-  end # method split
-end # class NameTokenizer
-
-
-=begin
-class NameParser
-
-  include LogUtils::Logging
-
-  ## to be done
-  
+  end # method parse
 end # class NameParser
-=end
+

@@ -24,12 +24,14 @@ lib/textutils/helper/value_helper_iii_numbers.rb
 lib/textutils/helper/xml_helper.rb
 lib/textutils/page.rb
 lib/textutils/parser/name_parser.rb
+lib/textutils/parser/name_tokenizer.rb
 lib/textutils/patterns.rb
 lib/textutils/reader/block_reader.rb
 lib/textutils/reader/code_reader.rb
 lib/textutils/reader/fixture_reader.rb
 lib/textutils/reader/hash_reader.rb
 lib/textutils/reader/line_reader.rb
+lib/textutils/reader/tree_reader.rb
 lib/textutils/reader/values_reader.rb
 lib/textutils/sanitizier.rb
 lib/textutils/title.rb
@@ -37,6 +39,9 @@ lib/textutils/title_mapper.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
 test/data/cl_all.txt
+test/data/de-deutschland/3--by-bayern/4--oberfranken/orte.txt
+test/data/de-deutschland/3--by-bayern/4--oberfranken/orte_ii.txt
+test/data/de-deutschland/orte.txt
 test/data/feedburner.txt
 test/helper.rb
 test/test_address_helper.rb
@@ -49,5 +54,6 @@ test/test_taglist.rb
 test/test_title_finder.rb
 test/test_title_helper.rb
 test/test_title_mapper.rb
+test/test_tree_reader.rb
 test/test_unicode_helper.rb
 test/test_values_reader.rb

@@ -52,8 +52,8 @@ require 'textutils/core_ext/file'
 require 'textutils/core_ext/time'
 require 'textutils/core_ext/array'
 
-
 require 'textutils/parser/name_parser'
+require 'textutils/parser/name_tokenizer'
 
 require 'textutils/reader/code_reader'
 require 'textutils/reader/hash_reader'
@@ -61,6 +61,7 @@ require 'textutils/reader/line_reader'
 require 'textutils/reader/values_reader'
 require 'textutils/reader/fixture_reader'
 require 'textutils/reader/block_reader'
+require 'textutils/reader/tree_reader'
 
 require 'textutils/classifier'
 require 'textutils/title'    # title table/mapper/finder utils
@@ -71,4 +72,4 @@ require 'textutils/page'   # for book pages and page templates
 
 
 # say hello
-puts TextUtils.banner   if $DEBUG || (defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG)
+puts TextUtils.banner   if defined?($RUBYLIBS_DEBUG) && $RUBYLIBS_DEBUG
