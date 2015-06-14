@@ -18,7 +18,9 @@ lib/textutils/helper/hypertext_helper.rb
 lib/textutils/helper/tag_helper.rb
 lib/textutils/helper/title_helper.rb
 lib/textutils/helper/unicode_helper.rb
-lib/textutils/helper/value_helper.rb
+lib/textutils/helper/value_helper_i.rb
+lib/textutils/helper/value_helper_ii.rb
+lib/textutils/helper/value_helper_iii_numbers.rb
 lib/textutils/helper/xml_helper.rb
 lib/textutils/page.rb
 lib/textutils/parser/name_parser.rb
