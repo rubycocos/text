@@ -62,7 +62,8 @@ class TestTitleHelper < Minitest::Test
       [ "Ṣan'ā' [Sana'a]", 'sana'],
       [ "P'yŏngyang [Pyongyang]", 'pyongyang' ],
       [ 'Kāṭhmāḍaũ [Kathmandu]', 'kathmadau' ],
-      [ "Pe\u{030C}awar", 'pexawar']  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
+      [ "Pe\u{030C}awar", 'pexawar'],  ## note: use unicode literal; Pex̌awar  -- see en.wikipedia.org/wiki/Peshawar
+      [ '1850 München', '1850muenchen'],
     ]
 
     txt_io.each do |txt|
