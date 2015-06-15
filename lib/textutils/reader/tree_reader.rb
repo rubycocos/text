@@ -31,7 +31,7 @@ class TreeReader
                       ([A-Z]+)   ## key all uppercase e.g. BT,N,etc
                   /x
 
-  LEVEL_REGEX   = /\.+/     ## e.g. .. or .... etc.
+  LEVEL_REGEX   = /[.*\-]+/     ## e.g. .. or .... etc. allow --/** too (e.g. lets you use markdown or ascii doc lists etc.)
 
 
   def each_line  
@@ -61,7 +61,7 @@ class TreeReader
       end
 
       ## assume rest is record
-      rest = s.rest  ## was: s.scan( /.+/ )
+      rest = s.rest.rstrip  ## note: remove trailing whitespaces
 
       level_diff = level - stack.size
 
@@ -90,7 +90,50 @@ class TreeReader
 
       yield( stack )
     end
+
   end # method each_line
+
+
+  def check   ## rename to lint/analyze/etc. - why? why not??
+
+    ## track stats for debugging (linting/checking)
+    stats = {
+      levels: Hash.new( 0 ),   ## note: set default to 0
+      ## check for duplicate entries (values/names)
+      values: {}
+    }
+
+    each_line do |stack|
+      node = stack.last
+
+      ## track stats for number of nodes
+      levels = stats[:levels]
+      levels[node.level] += 1
+
+      ## collect all values (for a level) in an array
+      values = stats[:values][node.level] || []
+      values << node.value
+      stats[:values][node.level] = values
+    end
+
+    puts "stats:"
+    pp stats[:levels]  
+
+#    puts "values:"
+#    pp stats[:values]
+
+    ## check for duplicates (using group_by)
+    values = stats[:values]
+    values.each do |l,ary|
+      puts "checking level #{l} - #{ary.size} node(s)..."
+      duplicates = ary.group_by { |e| e }.select { |k, v| v.size > 1 }
+      if duplicates.size > 0
+        puts "  #{duplicates.size} duplicate(s) in level #{l}:"
+        pp duplicates
+      end
+    end
+
+  end # method check
 
 end # class TreeReader
 

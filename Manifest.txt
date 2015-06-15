@@ -38,6 +38,7 @@ lib/textutils/title.rb
 lib/textutils/title_mapper.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
+test/data/at-austria/1--n-niederoesterreich/orte.txt
 test/data/cl_all.txt
 test/data/de-deutschland/3--by-bayern/4--oberfranken/orte.txt
 test/data/de-deutschland/3--by-bayern/4--oberfranken/orte_ii.txt
@@ -55,5 +56,6 @@ test/test_title_finder.rb
 test/test_title_helper.rb
 test/test_title_mapper.rb
 test/test_tree_reader.rb
+test/test_tree_reader_ii.rb
 test/test_unicode_helper.rb
 test/test_values_reader.rb
