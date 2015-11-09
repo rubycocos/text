@@ -21,7 +21,7 @@ Hoe.spec 'textutils' do
     ['props',    '>=1.1.2'],
     ['logutils', '>=0.6.1'],
     ### 3rd party gems
-    ['rubyzip'],   ## todo/check: make optional -why? why not??
+    ['rubyzip', '>=1.0.0'],   ## note: 1.0 changed to require zip (pre 1.0 was zip/zip); todo/check: make optional -why? why not??
     ['activesupport']    ## todo/check:  really needed? document what methods get used
   ]
 
