@@ -3,3 +3,7 @@
 pkg/
 doc/
 
+###  add multi-gems
+/textutils/pkg/
+/textutils-more/pkg/
+
