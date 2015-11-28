@@ -3,7 +3,7 @@
 Gem Family:
 
 - [**textutils**](textutils)       - text filters, helpers, readers and more
-- [textutils-more](textutils-more) -
+- [textutils-more](textutils-more)
 
 
 ## License
