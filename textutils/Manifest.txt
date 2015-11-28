@@ -36,6 +36,7 @@ lib/textutils/reader/values_reader.rb
 lib/textutils/sanitizier.rb
 lib/textutils/title.rb
 lib/textutils/title_mapper.rb
+lib/textutils/title_mapper2.rb
 lib/textutils/utils.rb
 lib/textutils/version.rb
 test/data/at-austria/1--n-niederoesterreich/orte.txt
@@ -55,6 +56,7 @@ test/test_taglist.rb
 test/test_title_finder.rb
 test/test_title_helper.rb
 test/test_title_mapper.rb
+test/test_title_mapper2.rb
 test/test_tree_reader.rb
 test/test_tree_reader_ii.rb
 test/test_unicode_helper.rb
