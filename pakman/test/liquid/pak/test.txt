@@ -1,0 +1,4 @@
+######
+# simple test manifest
+
+__file__.html test.html

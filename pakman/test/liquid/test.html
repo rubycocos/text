@@ -1,0 +1,21 @@
+
+<h3>Headers</h3>
+   
+<ul>
+  <li>author: {{ headers['author'] }}</li>
+  <li>title:  {{ headers['title'] }}</li>
+
+  <li>author: {{ headers.author }}</li>
+  <li>title:  {{ headers.title }}</li>
+</ul>
+
+
+<h3>Slides</h3>   
+      
+{% for slide in slides %}
+  <div>{{ slide['content'] }}</div>
+  <div>{{ slide['header'] }}</div>       
+
+  <div>{{ slide.content }}</div>
+  <div>{{ slide.header }}</div>       
+{% endfor %}

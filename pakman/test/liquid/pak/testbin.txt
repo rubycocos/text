@@ -1,0 +1,7 @@
+######
+# test manifest with binary files e.g. graphics
+#   and "unknown" extensions (will get handled like binary e.g. copied 1:1)
+
+s9logo.png
+hello.txt
+hello.doc

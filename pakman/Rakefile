@@ -1,0 +1,32 @@
+require 'hoe'
+require './lib/pakman/version.rb'
+
+Hoe.spec 'pakman' do
+
+  self.version = Pakman::VERSION
+
+  self.summary = 'pakman - Template Pack Manager (incl. Embedded Ruby, Liquid, etc.)'
+  self.description = summary
+
+  self.urls    = ['https://github.com/rubylibs/pakman']
+
+  self.author  = 'Gerald Bauer'
+  self.email   = 'wwwmake@googlegroups.com'
+
+  self.extra_deps = [
+    ['fetcher',  '>= 0.4.5'],
+    ['logutils', '>= 0.6.1'],
+    ['liquid',   '>= 4.0.0'],
+  ]
+
+  # switch extension to .rdoc for gihub formatting
+  # self.readme_file  = 'README.md'
+  # self.history_file = 'History.md'
+
+  self.licenses = ['Public Domain']
+
+  self.spec_extras = {
+   required_ruby_version: '>= 2.3'
+  }
+
+end

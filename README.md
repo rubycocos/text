@@ -7,7 +7,12 @@ Gems:
 
 <!-- break -->
 
-- [linkto](linkto) - link_to helpers for google search, bing search, flickr photo search, flickr photo tag, etc.
+- [linkto](linkto)  - link_to helpers for google search, bing search, flickr photo search, flickr photo tag, etc.
+
+
+<!-- break -->
+
+- [pakman](pakman)  - template pack manager (incl. embedded ruby, liquid, etc.)
 
 
 

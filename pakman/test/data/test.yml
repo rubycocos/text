@@ -1,0 +1,12 @@
+headers:
+  title: test title
+  author: test author
+
+
+slides:
+  - header:  test header 1
+    content: test content 1
+  - header:  test header 2
+    content: test content 2
+  - content: test content 3
+
