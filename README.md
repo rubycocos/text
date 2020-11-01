@@ -5,6 +5,10 @@ Gems:
 - [**textutils**](textutils)       - text filters, helpers, readers and more
 - [textutils-more](textutils-more)
 
+<!-- break -->
+
+- [linkto](linkto) - link_to helpers for google search, bing search, flickr photo search, flickr photo tag, etc.
+
 
 
 
