@@ -1,12 +1,14 @@
-# textutils  - text filters, helpers, readers and more
+# text tools, libraries & scripts
 
-Gem Family:
+Gems:
 
 - [**textutils**](textutils)       - text filters, helpers, readers and more
 - [textutils-more](textutils-more)
 
 
+
+
 ## License
 
-The `textutils` scripts are dedicated to the public domain.
+The scripts are dedicated to the public domain.
 Use it as you please with no restrictions whatsoever.
